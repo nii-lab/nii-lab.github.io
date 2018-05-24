@@ -1,6 +1,6 @@
 ---
 layout: page
-title: About NI<sup>2</sup>L
+title: About NI²L
 permalink: /about/
 ---
 
@@ -16,5 +16,5 @@ permalink: /about/
 # Publications
 -----------------
 
-# Direction to NI<sup>2</sup>L
+# Direction to NI²L
 -----------------
