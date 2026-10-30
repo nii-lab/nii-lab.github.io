@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>외부 데이터 수집과 품질 점검 · 학습 | 마이크로프로세서응용설계</title><link data-course-ui="" href="../../../../assets/courses/course-ui.css?v=8fb1789a3067" rel="stylesheet"/><script data-course-ui="" defer="" src="../../../../assets/courses/course-ui.js?v=8fb1789a3067"></script><meta content="Ki-Baek Lee (이기백)" data-niil-frame="" name="author"/><script data-niil-frame="" type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "외부 데이터 수집과 품질 점검 · 학습", "url": "https://nii-lab.github.io/ko/courses/microprocessor/web-scraping/lesson.preview.html", "author": {"@type": "Person", "name": "Ki-Baek Lee", "alternateName": "이기백", "affiliation": {"@type": "Organization", "name": "Kwangwoon University · NiiL"}, "@id": "https://nii-lab.github.io/ko/pages/ki-baek-lee-36f11249/#person"}, "license": "https://creativecommons.org/licenses/by/4.0/", "creditText": "Teaching content: Ki-Baek Lee, CC BY 4.0. Original exercise code: MIT; see course LICENSE.md. Third-party terms retained."}</script><link href="https://nii-lab.github.io/ko/courses/microprocessor/web-scraping/lesson.preview.html" hreflang="ko" rel="alternate"/><link href="https://nii-lab.github.io/en/courses/microprocessor/web-scraping/lesson.preview.html" hreflang="en" rel="alternate"/><link href="https://nii-lab.github.io/ko/courses/microprocessor/web-scraping/lesson.preview.html" hreflang="x-default" rel="alternate"/><link data-niil-frame="" href="/assets/niil.css?v=mlx-preview1" rel="stylesheet"/><script data-niil-frame="" defer="" src="/assets/routes.js?v=20261030-layout1"></script><script data-niil-frame="" defer="" src="/assets/niil.js?v=20261030-layout1"></script><link data-niil-frame="" href="/assets/courses.css?v=20261031-unified" rel="stylesheet"/><meta content="마이크로프로세서응용설계: 외부 데이터 수집과 품질 점검 · 학습. 페이지의 일부 필드가 빠져도 다른 기록까지 버리지 않도록, HTML 구조와 추출 규칙을 함께 확인합니다." name="description"/><meta content="index,follow" name="robots"/><link href="https://nii-lab.github.io/ko/courses/microprocessor/web-scraping/lesson.preview.html" rel="canonical"/><meta content="외부 데이터 수집과 품질 점검 · 학습 | 마이크로프로세서응용설계" property="og:title"/><meta content="마이크로프로세서응용설계: 외부 데이터 수집과 품질 점검 · 학습. 페이지의 일부 필드가 빠져도 다른 기록까지 버리지 않도록, HTML 구조와 추출 규칙을 함께 확인합니다." property="og:description"/><meta content="https://nii-lab.github.io/ko/courses/microprocessor/web-scraping/lesson.preview.html" property="og:url"/><meta content="website" property="og:type"/><meta content="NiiL · Kwangwoon University" property="og:site_name"/><meta content="ko_KR" property="og:locale"/><meta content="summary" name="twitter:card"/><meta content="외부 데이터 수집과 품질 점검 · 학습 | 마이크로프로세서응용설계" name="twitter:title"/><meta content="마이크로프로세서응용설계: 외부 데이터 수집과 품질 점검 · 학습. 페이지의 일부 필드가 빠져도 다른 기록까지 버리지 않도록, HTML 구조와 추출 규칙을 함께 확인합니다." name="twitter:description"/><script data-niil-seo="" type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://nii-lab.github.io/#organization", "name": "Nature-inspired Intelligence Lab (NiiL)", "alternateName": "자연모사 인공지능 연구실", "url": "https://nii-lab.github.io/", "parentOrganization": {"@type": "CollegeOrUniversity", "name": "Kwangwoon University", "alternateName": "광운대학교"}}, {"@type": "WebPage", "@id": "https://nii-lab.github.io/ko/courses/microprocessor/web-scraping/lesson.preview.html#webpage", "url": "https://nii-lab.github.io/ko/courses/microprocessor/web-scraping/lesson.preview.html", "name": "외부 데이터 수집과 품질 점검 · 학습 | 마이크로프로세서응용설계", "description": "마이크로프로세서응용설계: 외부 데이터 수집과 품질 점검 · 학습. 페이지의 일부 필드가 빠져도 다른 기록까지 버리지 않도록, HTML 구조와 추출 규칙을 함께 확인합니다.", "inLanguage": "ko", "isPartOf": {"@id": "https://nii-lab.github.io/#website"}}]}</script></head><body class="course-home niil-course" data-course-title-en="Microprocessor Applications"><a class="skip" data-niil-frame="" href="#main">본문 바로가기</a><header class="site-header" data-niil-frame=""><a aria-label="NiiL 홈" class="brand" href="/ko/">NiiL<span class="brand-dot">●</span></a><button aria-controls="site-nav" aria-expanded="false" class="menu-toggle" type="button">메뉴 ☰</button><nav aria-label="주 메뉴" id="site-nav"><a href="/ko/research/">연구</a><a href="/ko/publications/">논문</a><a href="/ko/members/">구성원</a><a aria-current="page" href="/ko/courses/">강의자료</a><a href="/ko/contact/">문의·지원</a></nav><nav aria-label="언어" class="language-switch"><a aria-current="true" data-course-language="ko" data-language="ko" href="/ko/courses/microprocessor/web-scraping/lesson.preview.html" lang="ko">한국어</a><span aria-hidden="true">/</span><a data-course-language="en" data-language="en" href="/en/courses/microprocessor/web-scraping/lesson.preview.html" lang="en">EN</a></nav></header><main class="directory" id="main"><nav aria-label="현재 과목" class="breadcrumb" data-niil-frame=""><a data-course-label-en="Microprocessor Applications" href="/ko/courses/microprocessor/index.html">마이크로프로세서응용설계</a></nav><h1>외부 데이터 수집과 품질 점검 · 학습</h1><nav class="notebook-actions"><a download="" href="lesson.ipynb">Colab 노트북 다운로드</a><a href="https://colab.research.google.com/github/nii-lab/nii-lab.github.io/blob/master/ko/courses/microprocessor/web-scraping/lesson.ipynb#copy=true" rel="noopener noreferrer" target="_blank">Colab 실행 ↗</a></nav><section class="notebook-cell">
+</section><section class="notebook-cell">
+<h2 id="이번에-배울-내용">이번에 배울 내용</h2>
+<!-- exercise-guidance:microprocessor/web-scraping/learning-intro -->
+<p>페이지의 일부 필드가 빠져도 다른 기록까지 버리지 않도록, HTML 구조와 추출 규칙을 함께 확인합니다. <!-- /exercise-guidance:microprocessor/web-scraping/learning-intro --></p>
+</section><section class="notebook-cell">
+<h2 id="전체-흐름">전체 흐름</h2>
+<!-- exercise-guidance:microprocessor/web-scraping/learning-flow -->
+<p>JSON·HTML 응답 → 필드·단위 검사 → 정상·거부 자료 → CSV 저장 <!-- /exercise-guidance:microprocessor/web-scraping/learning-flow --></p>
+</section><section class="notebook-cell">
+<h2 id="수집-성공과-값의-품질">수집 성공과 값의 품질</h2>
+<!-- exercise-guidance:microprocessor/web-scraping/learning-1 -->
+<p>JSON을 받았다고 바로 분석할 수 있는 것은 아닙니다. 필드 존재·자료형·물리 범위·단위를 차례로 확인합니다. 누락값을 실제 0으로 바꾸면 평균과 경보 기준이 왜곡될 수 있습니다. <!-- /exercise-guidance:microprocessor/web-scraping/learning-1 --></p>
+</section><section class="notebook-cell">
+<h2 id="입력-형식이-바뀌어도-지킬-경계">입력 형식이 바뀌어도 지킬 경계</h2>
+<!-- exercise-guidance:microprocessor/web-scraping/learning-2 -->
+<p>수집·정리·저장을 별도 함수로 두면 API 필드나 HTML 구조 변화의 영향을 좁힐 수 있습니다. 거부한 행에는 이유를 남기고, CSV 왕복 때 숫자가 문자열로 바뀌는 점도 확인합니다. <!-- /exercise-guidance:microprocessor/web-scraping/learning-2 --></p>
+</section><section class="notebook-cell">
+<h2 id="풀이-예제">풀이 예제</h2>
+<!-- exercise-guidance:microprocessor/web-scraping/learning-example -->
+<p>센서 응답은 device·timestamp·temperature_c를 포함합니다. 두 번째 행은 온도가 빠지고 세 번째는 문자열 숫자입니다. <!-- /exercise-guidance:microprocessor/web-scraping/learning-example --></p>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>import json
+payload='[{"device":"a","timestamp":0,"temperature_c":21.2},{"device":"a","timestamp":1},{"device":"b","timestamp":0,"temperature_c":"22.1"}]'
+rows=json.loads(payload)
+def clean(row):
+    if 'temperature_c' not in row:return None,'missing temperature'
+    try:return dict(row,temperature_c=float(row['temperature_c'])),'ok'
+    except (ValueError,TypeError):return None,'invalid temperature'
+for row in rows:print(clean(row))
+</code></pre><pre class="notebook-output">({'device': 'a', 'timestamp': 0, 'temperature_c': 21.2}, 'ok')
+(None, 'missing temperature')
+({'device': 'b', 'timestamp': 0, 'temperature_c': 22.1}, 'ok')
+</pre></section><section class="notebook-cell">
+<h2 id="참고-예제">참고 예제</h2>
+<!-- exercise-guidance:microprocessor/web-scraping/learning-references -->
+<details class="learning-references">
+<summary>
+추가 예제 보기
+</summary>
+<p>
+<a data-course-reference="" href="index.html">참고 자료</a>
+</p>
+</details>
+<!-- /exercise-guidance:microprocessor/web-scraping/learning-references -->
+</section></main><footer class="site-footer" data-niil-frame=""><div class="footer-identity"><strong>자연모사 인공지능 연구실</strong><span>광운대학교</span></div><div class="footer-meta"><a href="/ko/courses/reuse.html">저자·이용 안내</a><small>© NiiL</small></div></footer></body></html>

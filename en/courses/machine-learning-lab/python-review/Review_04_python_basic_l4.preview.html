@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Contents | Machine Learning Lab</title><link data-course-ui="" href="/assets/courses/course-ui.css?v=8fb1789a3067" rel="stylesheet"/><script data-course-ui="" defer="" src="/assets/courses/course-ui.js?v=8fb1789a3067"></script><meta content="7391e796b84715447ef9631bcf9df7017ba31966be93a3312945b4609ae48426" name="notebook-source-sha256"/><meta content="a7a0f623e8a37da44511f08a5783192f789bacc46e5bc6313d894dd557a94974" name="notebook-renderer-sha256"/><meta content="Ki-Baek Lee (이기백)" data-niil-frame="" name="author"/><script data-niil-frame="" type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Contents", "url": "https://nii-lab.github.io/en/courses/machine-learning-lab/python-review/Review_04_python_basic_l4.preview.html", "author": {"@type": "Person", "name": "Ki-Baek Lee", "alternateName": "이기백", "affiliation": {"@type": "Organization", "name": "Kwangwoon University · NiiL"}, "@id": "https://nii-lab.github.io/ko/pages/ki-baek-lee-36f11249/#person"}, "license": "https://creativecommons.org/licenses/by/4.0/", "creditText": "Teaching content: Ki-Baek Lee, CC BY 4.0. Original exercise code: MIT; see course LICENSE.md. Third-party terms retained."}</script><link href="https://nii-lab.github.io/ko/courses/machine-learning-lab/python-review/Review_04_python_basic_l4.preview.html" hreflang="ko" rel="alternate"/><link href="https://nii-lab.github.io/en/courses/machine-learning-lab/python-review/Review_04_python_basic_l4.preview.html" hreflang="en" rel="alternate"/><link href="https://nii-lab.github.io/ko/courses/machine-learning-lab/python-review/Review_04_python_basic_l4.preview.html" hreflang="x-default" rel="alternate"/><link data-niil-frame="" href="/assets/niil.css?v=mlx-preview1" rel="stylesheet"/><script data-niil-frame="" defer="" src="/assets/routes.js?v=20261030-layout1"></script><script data-niil-frame="" defer="" src="/assets/niil.js?v=20261030-layout1"></script><link data-niil-frame="" href="/assets/courses.css?v=20261031-unified" rel="stylesheet"/><meta content="Machine Learning Lab: Contents." name="description"/><meta content="index,follow" name="robots"/><link href="https://nii-lab.github.io/en/courses/machine-learning-lab/python-review/Review_04_python_basic_l4.preview.html" rel="canonical"/><meta content="Contents | Machine Learning Lab" property="og:title"/><meta content="Machine Learning Lab: Contents." property="og:description"/><meta content="https://nii-lab.github.io/en/courses/machine-learning-lab/python-review/Review_04_python_basic_l4.preview.html" property="og:url"/><meta content="website" property="og:type"/><meta content="NiiL · Kwangwoon University" property="og:site_name"/><meta content="en_US" property="og:locale"/><meta content="summary" name="twitter:card"/><meta content="Contents | Machine Learning Lab" name="twitter:title"/><meta content="Machine Learning Lab: Contents." name="twitter:description"/><script data-niil-seo="" type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://nii-lab.github.io/#organization", "name": "Nature-inspired Intelligence Lab (NiiL)", "alternateName": "자연모사 인공지능 연구실", "url": "https://nii-lab.github.io/", "parentOrganization": {"@type": "CollegeOrUniversity", "name": "Kwangwoon University", "alternateName": "광운대학교"}}, {"@type": "WebPage", "@id": "https://nii-lab.github.io/en/courses/machine-learning-lab/python-review/Review_04_python_basic_l4.preview.html#webpage", "url": "https://nii-lab.github.io/en/courses/machine-learning-lab/python-review/Review_04_python_basic_l4.preview.html", "name": "Contents | Machine Learning Lab", "description": "Machine Learning Lab: Contents.", "inLanguage": "en", "isPartOf": {"@id": "https://nii-lab.github.io/#website"}}]}</script></head><body class="course-home niil-course" data-course-title-en="Machine Learning Lab"><a class="skip" data-niil-frame="" href="#main">Skip to content</a><header class="site-header" data-niil-frame=""><a aria-label="NiiL home" class="brand" href="/en/">NiiL<span class="brand-dot">●</span></a><button aria-controls="site-nav" aria-expanded="false" class="menu-toggle" type="button">Menu ☰</button><nav aria-label="Main navigation" id="site-nav"><a href="/en/research/">Research</a><a href="/en/publications/">Publications</a><a href="/en/members/">People</a><a aria-current="page" href="/en/courses/">Course</a><a href="/en/contact/">Contact</a></nav><nav aria-label="Language" class="language-switch"><a data-course-language="ko" data-language="ko" href="/ko/courses/machine-learning-lab/python-review/Review_04_python_basic_l4.preview.html" lang="ko">한국어</a><span aria-hidden="true">/</span><a aria-current="true" data-course-language="en" data-language="en" href="/en/courses/machine-learning-lab/python-review/Review_04_python_basic_l4.preview.html" lang="en">EN</a></nav></header><main class="directory" id="main"><nav aria-label="Current course" class="breadcrumb" data-niil-frame=""><a data-course-label-en="Machine Learning Lab" href="/en/courses/machine-learning-lab/index.html">Machine Learning Lab</a></nav><h1>Contents</h1><p class="translation-note" data-translation-note="">English translation</p><nav class="notebook-actions"><a download="Review_04_python_basic_l4.ipynb" href="/en/courses/machine-learning-lab/python-review/Review_04_python_basic_l4.ipynb">Download Colab notebook</a><a href="https://colab.research.google.com/github/nii-lab/nii-lab.github.io/blob/master/en/courses/machine-learning-lab/python-review/Review_04_python_basic_l4.ipynb#copy=true" rel="noopener noreferrer" target="_blank">Run in Colab ↗</a></nav><section class="notebook-cell"><p><span id="목차"></span></p>
+<h1 id="contents">Contents</h1>
+<ul>
+<li><a href="#4.-기본적인-계산-다루기">4. Basic calculations</a>
+<ul>
+<li><a href="#4.1-기본-수학-연산">4.1 Basic mathematical operations</a></li>
+<li><a href="#4.2-단순-반복-계산하기-(for)">4.2 Simple loops (for)</a></li>
+<li><a href="#4.3-조건-반복-계산하기-(while)">4.3 Conditional loops (while)</a></li>
+<li><a href="#4.4-좀-더-복잡한-계산하기-(if)">4.4 More complex calculations (if)</a></li>
+</ul></li>
+</ul>
+<p><span id="기본적인-계산-다루기"></span></p>
+<span id="4.-기본적인-계산-다루기"></span><h1 id="4-basic-calculations">4. Basic calculations</h1>
+<p><span id="기본-수학-연산"></span></p>
+<span id="4.1-기본-수학-연산"></span><h3 id="41-basic-mathematical-operations">4.1 Basic mathematical operations</h3>
+<ul>
+<li>Variables
+<ul>
+<li>A variable is a name identifying a storage location for data. It is called a variable because the stored data can change.</li>
+<li>For readability, choose names that reflect the data type or purpose.
+<ul>
+<li>(Reading other people's source code reveals some naming conventions.)</li>
+</ul></li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code># Good variable examples
+pos_x = 10 
+num_values = 5
+_event_flag = False
+
+# Bad variable examples
+abc = 4
+a1 = 50
+xxxx = 3.4
+temp1 = 4
+temp2 = 5</code></pre></section><section class="notebook-cell">
+<ul>
+<li>Data types
+<ul>
+<li>These include <code>integer</code>, <code>floating-point number</code>, <code>bool</code> (True/False), and <code>string</code>.</li>
+<li>Python manages them automatically, so you generally do not need to handle them explicitly.
+<ul>
+<li>However, be careful: a data type can change against your intention.</li>
+</ul></li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code># Integer
+number = 5
+
+# Floating-point number
+value = 2.5
+
+# bool
+is_number = True
+
+# String (string)
+name = 'Ivan'
+
+# When an integer becomes a floating-point number
+number = number / 2
+print('number =', number)</code></pre><pre class="notebook-output">number = 2.5
+</pre></section><section class="notebook-cell">
+<ul>
+<li>Basic operators
+<ul>
+<li>Arithmetic
+<ul>
+<li>Addition <code>+</code>, subtraction <code>-</code>, multiplication <code>*</code>, division <code>/</code>)</li>
+</ul></li>
+<li>Other operations
+<ul>
+<li>Quotient <code>//</code>, remainder <code>%</code>, exponentiation <code>**</code></li>
+</ul></li>
+<li>Logical operations
+<ul>
+<li>Greater than <code>&gt;</code>, greater than or equal to <code>&gt;=</code>, less than <code>&lt;</code>, less than or equal to <code>&lt;=</code>, equal to <code>==</code>, not equal to <code>!=</code>, <code>and</code>, <code>or</code></li>
+</ul></li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>a = 10
+b = 2.5
+print(a+b, a-b, a*b, a/b, a//b, a%b, a**b)
+print(a&gt;b, a&gt;=b, a&lt;b, a&lt;=b, a==b, a!=b, a&gt;b or a&lt;=b, a&gt;b and a&lt;=b)</code></pre><pre class="notebook-output">12.5 7.5 25.0 4.0 4.0 0.0 316.22776601683796
+True True False False False True True False
+</pre></section><section class="notebook-cell">
+<ul>
+<li>Common mathematical functions (using NumPy)
+<ul>
+<li>Sine <code>sin</code>, cosine <code>cos</code>, exponential <code>exp</code>, round <code>round</code>, ceiling <code>ceil</code>, floor <code>floor</code></li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code># We will cover use of the numpy library in more detail later.
+import numpy as np
+angle = np.pi/4
+print(angle)
+print(np.sin(angle))
+print(np.cos(angle))
+print(np.exp(angle))
+print(np.round(angle))
+print(np.ceil(angle))
+print(np.floor(angle))</code></pre><pre class="notebook-output">0.7853981633974483
+0.7071067811865475
+0.7071067811865476
+2.1932800507380152
+1.0
+1.0
+0.0
+</pre></section><section class="notebook-cell">
+<p><span id="단순-반복-계산하기-for"></span></p>
+<span id="4.2-단순-반복-계산하기-(for)"></span><h3 id="42-simple-loops-for">4.2 Simple loops (for)</h3>
+<ul>
+<li>The <code>for</code> statement is a built-in feature commonly used to <code>repeat</code> a specified number of times.</li>
+<li>Format</li>
+</ul>
+<p><span id="cb1"></span></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a aria-hidden="true" href="#cb1-1" tabindex="-1"></a>    <span class="cf">for</span> variable <span class="kw">in</span> items:</span>
+<span id="cb1-2"><a aria-hidden="true" href="#cb1-2" tabindex="-1"></a>        statement</span>
+<span id="cb1-3"><a aria-hidden="true" href="#cb1-3" tabindex="-1"></a>        ...</span></code></pre></div>
+<pre><code>+ Each list element is assigned to the variable in order during iteration, and the loop ends after all elements have been processed. 
++ The list can contain any data type.</code></pre>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>for i in [4, 'text', 1.5 , True, {'name':'Charles', 'age':15}]:
+    print(i)</code></pre><pre class="notebook-output">4
+text
+1.5
+True
+{'name': 'Charles', 'age': 15}
+</pre></section><section class="notebook-cell">
+<ul>
+<li>However, the following form is more common.</li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>for i in range(5):
+    print(i)</code></pre><pre class="notebook-output">0
+1
+2
+3
+4
+</pre></section><section class="notebook-cell">
+<ul>
+<li>The <code>continue</code> statement can skip <strong>one</strong> iteration. (The <code>if</code> statement is explained in more detail at the end of this section.)</li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>for i in range(5):
+    if i==3:
+        continue
+    print(i)</code></pre><pre class="notebook-output">0
+1
+2
+4
+</pre></section><section class="notebook-cell">
+<ul>
+<li>The <code>break</code> statement can <strong>completely</strong> end a loop. (<code>break</code> exits only one loop at a time.)</li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>for i in range(5):
+    if i==3:
+        break
+    for j in range(5):
+        if j==2:
+            break
+        print(i, j)</code></pre><pre class="notebook-output">0 0
+0 1
+1 0
+1 1
+2 0
+2 1
+</pre></section><section class="notebook-cell">
+<ul>
+<li>(Simple example) Multiplication table (Print only tables 2–4 to keep the output short.)</li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>for i in range(2,5):
+    for j in range(1,10):
+        print('%d * %d = %d' % (i, j, i*j))
+    print('----------')</code></pre><pre class="notebook-output">2 * 1 = 2
+2 * 2 = 4
+2 * 3 = 6
+2 * 4 = 8
+2 * 5 = 10
+2 * 6 = 12
+2 * 7 = 14
+2 * 8 = 16
+2 * 9 = 18
+----------
+3 * 1 = 3
+3 * 2 = 6
+3 * 3 = 9
+3 * 4 = 12
+3 * 5 = 15
+3 * 6 = 18
+3 * 7 = 21
+3 * 8 = 24
+3 * 9 = 27
+----------
+4 * 1 = 4
+4 * 2 = 8
+4 * 3 = 12
+4 * 4 = 16
+4 * 5 = 20
+4 * 6 = 24
+4 * 7 = 28
+4 * 8 = 32
+4 * 9 = 36
+----------
+</pre></section><section class="notebook-cell">
+<p><span id="조건-반복-계산하기-while"></span></p>
+<span id="4.3-조건-반복-계산하기-(while)"></span><h3 id="43-conditional-loops-while">4.3 Conditional loops (while)</h3>
+<ul>
+<li>The <code>while</code> statement is used to <code>repeat</code> only when a <code>condition</code> is satisfied.</li>
+<li>Format</li>
+</ul>
+<p><span id="cb3"></span></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a aria-hidden="true" href="#cb3-1" tabindex="-1"></a>    <span class="cf">while</span>(condition):</span>
+<span id="cb3-2"><a aria-hidden="true" href="#cb3-2" tabindex="-1"></a>        statement</span>
+<span id="cb3-3"><a aria-hidden="true" href="#cb3-3" tabindex="-1"></a>        ...</span></code></pre></div>
+<pre><code>+ The condition has type bool and can be expressed as `True` or `False`.
+    - Conditions can be combined as (condition `and` condition), (condition `or` condition).</code></pre>
+<ul>
+<li>When the condition is <code>True</code>, the statements below execute, then the condition is checked again.</li>
+<li>When the condition is <code>False</code>, the loop stops and execution continues with the next statement.</li>
+<li>When the condition is always <code>True</code>, the loop has no way to stop and is often called an <strong>infinite loop</strong>.
+<ul>
+<li>Unless an infinite loop is intentional, carefully check whether some conditions could cause one.</li>
+<li><code>continue</code> and <code>break</code> work the same way as in a <code>for</code> statement, and <code>break</code> can exit an infinite loop. (See the example below.)</li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>i = [1,2,3,4,-1,5,6,7,8]
+j = []
+count=0
+while(i[count]&gt;0):
+    j.append(i[count])
+    count = count + 1
+print(j)</code></pre><pre class="notebook-output">[1, 2, 3, 4]
+</pre></section><section class="notebook-cell">
+<ul>
+<li>(Simple example) Multiplication table (Accept input and print the requested multiplication table.)</li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code># Provide information about how the program works.
+print('원하는 단수를 입력하시고, 종료하려면 -1을 입력하세요.')
+
+# Deliberately use an infinite loop.
+while(True):
+    
+    # Assume the user enters an integer.
+    i = int(input())
+    
+    # Exit the loop when -1 is entered.
+    if i==-1:
+        break
+    
+    # Output
+    for j in range(1,10):
+        print('%d x %d = %d' % (i, j, i*j))</code></pre><pre class="notebook-output">원하는 단수를 입력하시고, 종료하려면 -1을 입력하세요.
+4
+4 x 1 = 4
+4 x 2 = 8
+4 x 3 = 12
+4 x 4 = 16
+4 x 5 = 20
+4 x 6 = 24
+4 x 7 = 28
+4 x 8 = 32
+4 x 9 = 36
+5
+5 x 1 = 5
+5 x 2 = 10
+5 x 3 = 15
+5 x 4 = 20
+5 x 5 = 25
+5 x 6 = 30
+5 x 7 = 35
+5 x 8 = 40
+5 x 9 = 45
+-1
+</pre></section><section class="notebook-cell">
+<p><span id="좀-더-복잡한-계산하기-if"></span></p>
+<span id="4.4-좀-더-복잡한-계산하기-(if)"></span><h3 id="44-more-complex-calculations-if">4.4 More complex calculations (if)</h3>
+<ul>
+<li>The <code>if</code> statement performs the desired action when a <code>condition</code> is satisfied. (Unlike <code>while</code>, it does not repeat.)</li>
+<li>Format</li>
+</ul>
+<p><span id="cb5"></span></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a aria-hidden="true" href="#cb5-1" tabindex="-1"></a>    <span class="cf">if</span> (condition):</span>
+<span id="cb5-2"><a aria-hidden="true" href="#cb5-2" tabindex="-1"></a>        statement</span>
+<span id="cb5-3"><a aria-hidden="true" href="#cb5-3" tabindex="-1"></a>        ...</span>
+<span id="cb5-4"><a aria-hidden="true" href="#cb5-4" tabindex="-1"></a>    <span class="cf">elif</span> (condition):</span>
+<span id="cb5-5"><a aria-hidden="true" href="#cb5-5" tabindex="-1"></a>        statement</span>
+<span id="cb5-6"><a aria-hidden="true" href="#cb5-6" tabindex="-1"></a>        ...</span>
+<span id="cb5-7"><a aria-hidden="true" href="#cb5-7" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb5-8"><a aria-hidden="true" href="#cb5-8" tabindex="-1"></a>        statement</span>
+<span id="cb5-9"><a aria-hidden="true" href="#cb5-9" tabindex="-1"></a>        ...</span></code></pre></div>
+<ul>
+<li>The statements below run when the condition is <code>True</code>.</li>
+<li>If another condition needs to be checked when the condition is <code>False</code>, use the <code>elif</code> statement.</li>
+<li>Place any statements to run when the condition is <code>False</code> under the <code>else</code> statement.</li>
+<li>Examples of <code>if</code> statements are omitted because many have already been shown above.</li>
+</ul>
+</section></main><footer class="site-footer" data-niil-frame=""><div class="footer-identity"><strong>Nature-inspired Intelligence Lab</strong><span>Kwangwoon University · Seoul, Korea</span></div><div class="footer-meta"><a href="/en/courses/reuse.html">Author &amp; use</a><small>© NiiL</small></div></footer></body></html>

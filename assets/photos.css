@@ -1,0 +1,3 @@
+.photo-gallery{padding-bottom:80px}.photo-back{display:inline-block;margin:12px 0 28px}.lab-photo{margin:0 0 48px}.lab-photo img{display:block;width:100%;height:auto;max-height:85vh;object-fit:contain;background:var(--paper);border-radius:6px}.lab-photo figcaption{padding:20px 0;border-bottom:1px solid var(--line)}.lab-photo h2{font-size:clamp(22px,3vw,30px);margin-bottom:8px}.lab-photo p{color:var(--muted);font-size:14px;margin:0}
+
+.lab-photo.standing>a{display:block;aspect-ratio:4/3;overflow:hidden;max-width:110vh;margin:auto}.lab-photo.standing img{width:100%;height:100%;max-height:none;object-fit:cover}

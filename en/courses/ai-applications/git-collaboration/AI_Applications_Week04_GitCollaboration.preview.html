@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Collaborate with a change history | AI Applications</title><link data-course-ui="" href="/assets/courses/course-ui.css?v=8fb1789a3067" rel="stylesheet"/><script data-course-ui="" defer="" src="/assets/courses/course-ui.js?v=8fb1789a3067"></script><meta content="e380fdb590acb7fe06589160c8fb9a7a98934ef7a75eadc052686b153d32c31f" name="notebook-source-sha256"/><meta content="a7a0f623e8a37da44511f08a5783192f789bacc46e5bc6313d894dd557a94974" name="notebook-renderer-sha256"/><meta content="Ki-Baek Lee (이기백)" data-niil-frame="" name="author"/><script data-niil-frame="" type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Collaborate with a change history", "url": "https://nii-lab.github.io/en/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html", "author": {"@type": "Person", "name": "Ki-Baek Lee", "alternateName": "이기백", "affiliation": {"@type": "Organization", "name": "Kwangwoon University · NiiL"}, "@id": "https://nii-lab.github.io/ko/pages/ki-baek-lee-36f11249/#person"}, "license": "https://creativecommons.org/licenses/by/4.0/", "creditText": "Teaching content: Ki-Baek Lee, CC BY 4.0. Original exercise code: MIT; see course LICENSE.md. Third-party terms retained."}</script><link href="https://nii-lab.github.io/ko/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" hreflang="ko" rel="alternate"/><link href="https://nii-lab.github.io/en/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" hreflang="en" rel="alternate"/><link href="https://nii-lab.github.io/ko/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" hreflang="x-default" rel="alternate"/><link data-niil-frame="" href="/assets/niil.css?v=mlx-preview1" rel="stylesheet"/><script data-niil-frame="" defer="" src="/assets/routes.js?v=20261030-layout1"></script><script data-niil-frame="" defer="" src="/assets/niil.js?v=20261030-layout1"></script><link data-niil-frame="" href="/assets/courses.css?v=20261031-unified" rel="stylesheet"/><meta content="AI Applications: Collaborate with a change history." name="description"/><meta content="index,follow" name="robots"/><link href="https://nii-lab.github.io/en/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" rel="canonical"/><meta content="Collaborate with a change history | AI Applications" property="og:title"/><meta content="AI Applications: Collaborate with a change history." property="og:description"/><meta content="https://nii-lab.github.io/en/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" property="og:url"/><meta content="website" property="og:type"/><meta content="NiiL · Kwangwoon University" property="og:site_name"/><meta content="en_US" property="og:locale"/><meta content="summary" name="twitter:card"/><meta content="Collaborate with a change history | AI Applications" name="twitter:title"/><meta content="AI Applications: Collaborate with a change history." name="twitter:description"/><script data-niil-seo="" type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://nii-lab.github.io/#organization", "name": "Nature-inspired Intelligence Lab (NiiL)", "alternateName": "자연모사 인공지능 연구실", "url": "https://nii-lab.github.io/", "parentOrganization": {"@type": "CollegeOrUniversity", "name": "Kwangwoon University", "alternateName": "광운대학교"}}, {"@type": "WebPage", "@id": "https://nii-lab.github.io/en/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html#webpage", "url": "https://nii-lab.github.io/en/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html", "name": "Collaborate with a change history | AI Applications", "description": "AI Applications: Collaborate with a change history.", "inLanguage": "en", "isPartOf": {"@id": "https://nii-lab.github.io/#website"}}]}</script></head><body class="course-home niil-course" data-course-title-en="AI Applications"><a class="skip" data-niil-frame="" href="#main">Skip to content</a><header class="site-header" data-niil-frame=""><a aria-label="NiiL home" class="brand" href="/en/">NiiL<span class="brand-dot">●</span></a><button aria-controls="site-nav" aria-expanded="false" class="menu-toggle" type="button">Menu ☰</button><nav aria-label="Main navigation" id="site-nav"><a href="/en/research/">Research</a><a href="/en/publications/">Publications</a><a href="/en/members/">People</a><a aria-current="page" href="/en/courses/">Course</a><a href="/en/contact/">Contact</a></nav><nav aria-label="Language" class="language-switch"><a data-course-language="ko" data-language="ko" href="/ko/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" lang="ko">한국어</a><span aria-hidden="true">/</span><a aria-current="true" data-course-language="en" data-language="en" href="/en/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" lang="en">EN</a></nav></header><main class="directory" id="main"><nav aria-label="Current course" class="breadcrumb" data-niil-frame=""><a data-course-label-en="AI Applications" href="/en/courses/ai-applications/index.html">AI Applications</a></nav><h1>Collaborate with a change history</h1><p class="translation-note" data-translation-note="">English translation</p><nav class="notebook-actions"><a download="AI_Applications_Week04_GitCollaboration.ipynb" href="/en/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.ipynb">Download Colab notebook</a><a href="https://colab.research.google.com/github/nii-lab/nii-lab.github.io/blob/master/en/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.ipynb#copy=true" rel="noopener noreferrer" target="_blank">Run in Colab ↗</a></nav><section class="notebook-cell"><p><span id="변경-이력을-남기며-협업하기"></span></p>
+<p><strong>Create your own copy to run, edit, and record results.</strong></p>
+<ul>
+<li>Name: <strong>⟦Enter here⟧</strong></li>
+<li>Student ID: <strong>⟦Enter here⟧</strong></li>
+</ul>
+<p><a href="/en/courses/ai-applications/git-collaboration/index.html">Self-study material</a></p>
+<p><span id="실습-목적"></span></p>
+<h2 id="exercise-objective">Exercise objective</h2>
+<p>Record edits with Commits, review changes in a PR, and check how Merge applies them to main. Use your own Repository for this exercise; Forks and PRs on a peer's Repository are optional.</p>
+<p>For an external contributor's proposed changes and why each step is needed, see <a href="/en/courses/ai-applications/git-collaboration/index.html#collaboration-cycle">the explanation in the learning material</a>.</p>
+<p><strong>Exercise sequence and rationale:</strong> First, use a temporary Repository in Colab to examine the relationship between file edits, Commits, and Branches without logging in or configuring permissions. Then create a separate repository on the GitHub website to practice PR review and Merge. You will understand Git change history and then use GitHub collaboration features; you will not upload the repository created in Colab.</p>
+<ul>
+<li>Run Code Cells: ▶ or <code>Shift+Enter</code>, in order from the top.</li>
+<li>Edit a Text Cell: double-click → write <code>your response</code> → <code>Shift+Enter</code>.</li>
+<li>Response cell: enter your own code.</li>
+<li>After changing values: rerun that cell and the relevant cells below it.</li>
+</ul>
+</section><section class="notebook-cell">
+<p><span id="내-작업-공간에서-git-연습하기"></span></p>
+<h2 id="1-practice-git-in-your-own-workspace">1. Practice Git in your own workspace</h2>
+<p>After practicing Commits and Branches in a temporary Colab folder, follow the steps below for PRs and Merges on GitHub.</p>
+<p><span id="a.-기준-예제-먼저-읽고-실행"></span></p>
+<h3 id="a-baseline-example--read-and-run-first">A. Baseline example · Read and run first</h3>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>import tempfile, pathlib, subprocess
+repo=pathlib.Path(tempfile.mkdtemp(prefix='course-git-'))
+def git(*args):
+    return subprocess.check_output(['git','-C',str(repo),*args],text=True,stderr=subprocess.STDOUT)
+git('init','-b','main');git('config','user.name','Student Example');git('config','user.email','example@example.invalid')
+(repo/'README.md').write_text('# Practice\nBaseline\n')
+git('add','README.md');git('commit','-m','Add baseline')
+git('switch','-c','practice-change')
+(repo/'README.md').write_text('# Practice\nBaseline\nMy change\n')
+print(git('diff'));git('add','README.md');git('commit','-m','Describe one change')
+print(git('log','--oneline','--all','--graph'))
+</code></pre></section><section class="notebook-cell">
+<p><span id="b.-직접-수행"></span></p>
+<h3 id="b-hands-on-activities">B. Hands-on activities</h3>
+<p>A Branch is a workflow recording changes separately. Here, create <code>practice</code> from the default Branch <code>main</code> and edit it. A <strong>Pull Request (PR)</strong> requests review before merging these changes into <code>main</code>; <strong>Merge</strong> actually combines the reviewed changes. Creating a PR alone does not change <code>main</code>.</p>
+<ol type="1">
+<li><p><strong>Practice change history in Colab:</strong> Edit one sentence in the local example and repeat <code>git diff → add → commit → log</code> yourself.</p></li>
+<li><p><strong>Create a practice Repository on GitHub:</strong> Create a personal practice Repository with a README.</p></li>
+<li><p><strong>Edit and Commit on a Branch:</strong> Create a new Branch <code>practice</code>, add what you learned this week to the README, and Commit.</p></li>
+<li><p><strong>Review the PR and Merge:</strong> Open the Pull Request for <code>practice → main</code>, review the changes under <strong>Files changed</strong>, and Merge.</p></li>
+<li><p><strong>Explain the changes:</strong> Explain the roles of the two Branches and the differences before and after Merge to a teaching assistant or peer.</p></li>
+<li><p><strong>Record results:</strong> Record the Repository URL, Commit history, PR changes, and completed Merge screen in the Notebook.</p></li>
+</ol>
+<p>At each stage, check which Branch records the changes. Compare main's content when the PR is opened and when it is Merged.</p>
+</section><section class="notebook-cell"><pre class="notebook-code"><code># ✍ Write your own: add your code below this cell.
+# You may add Code Cells if the code gets long.
+</code></pre></section><section class="notebook-cell">
+<p><span id="c.-직접-기록-이-text-cell을-더블클릭해서-수정"></span></p>
+<h3 id="c-your-record--double-click-this-text-cell-to-edit">C. Your record · Double-click this Text Cell to edit</h3>
+<ul>
+<li>Conditions checked or changed: <strong>⟦Enter your response⟧</strong></li>
+<li>Prediction before execution: <strong>⟦Enter your response⟧</strong></li>
+<li>What I checked in Commits, PRs, and Merges: <strong>⟦Enter your response⟧</strong></li>
+<li>Difference from prediction and explanation: <strong>⟦Enter your response⟧</strong></li>
+</ul>
+</section><section class="notebook-cell">
+<p><span id="변경-이력-정리"></span></p>
+<h2 id="summarize-change-history">Summarize change history</h2>
+<p>Review the file edits, Commits, PRs, and Merges you completed and summarize the following. You do not need to create three additional Repositories or PRs.</p>
+<table>
+<thead>
+<tr>
+<th>Step</th>
+<th>What to check</th>
+<th>My notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Edit and Commit</td>
+<td>What did you change, and what message did you use to record it?</td>
+<td>⟦Enter your response⟧</td>
+</tr>
+<tr>
+<td>PR</td>
+<td>What are the source Branch of the changes and the target Branch for merging?</td>
+<td>⟦Enter your response⟧</td>
+</tr>
+<tr>
+<td>Merge</td>
+<td>Where can you see the content applied to main and the Commit history?</td>
+<td>⟦Enter your response⟧</td>
+</tr>
+</tbody>
+</table>
+</section><section class="notebook-cell"><pre class="notebook-code"><code># ✍ Code for repeated experiments
+</code></pre></section><section class="notebook-cell">
+<p><span id="선택-실습-fork와-pull-request"></span></p>
+<h2 id="optional-exercise--fork-and-pull-request">Optional exercise · Fork and Pull Request</h2>
+<p>Proceed when a peer has a public Repository for practicing together.</p>
+<ol type="1">
+<li>Fork your peer's Repository and create a Branch in your Fork.</li>
+<li>Edit one explanatory sentence in <code>README.md</code>, then Commit and Push.</li>
+<li>Open a Pull Request to the original Repository and explain the reason for the change in one sentence.</li>
+<li>In a Text Cell in the notebook, record the Pull Request URL and the sentence you changed. Explain why you can propose changes without permission to Push directly to the original Repository.</li>
+</ol>
+<p><span id="저장제출"></span></p>
+<h2 id="save-and-submit">Save and submit</h2>
+<p>Save the Notebook to your Drive.</p>
+<p>Include the edited content, Commit, Pull Request, and Merge history, and notes explaining what you did at each step. Submit through KLAS; check the semester schedule and latest announcements for deadlines.</p>
+<p>Capture your GitHub collaboration results in screenshots showing changes in the repository, Branches, and PRs, and the Merge history. Exclude credentials. The Notebook is for practice and notes.</p>
+</section></main><footer class="site-footer" data-niil-frame=""><div class="footer-identity"><strong>Nature-inspired Intelligence Lab</strong><span>Kwangwoon University · Seoul, Korea</span></div><div class="footer-meta"><a href="/en/courses/reuse.html">Author &amp; use</a><small>© NiiL</small></div></footer></body></html>

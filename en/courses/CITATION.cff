@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "Please cite these course materials when reusing them."
+type: dataset
+title: "NiiL Course Materials"
+authors:
+  - family-names: Lee
+    given-names: Ki-Baek
+    affiliation: Kwangwoon University
+url: "https://nii-lab.github.io/en/courses/"
+repository-code: "https://nii-lab.github.io/en/courses/"
+license:
+  - CC-BY-4.0
+  - MIT

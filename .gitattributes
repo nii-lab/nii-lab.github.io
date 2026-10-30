@@ -1,0 +1,3 @@
+/assets/** -text -whitespace
+/ko/** -text -whitespace
+/en/** -text -whitespace

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>변경 이력을 남기며 협업하기 | 인공지능응용</title><link data-course-ui="" href="../../../../assets/courses/course-ui.css?v=8fb1789a3067" rel="stylesheet"/><script data-course-ui="" defer="" src="../../../../assets/courses/course-ui.js?v=8fb1789a3067"></script><meta content="Ki-Baek Lee (이기백)" data-niil-frame="" name="author"/><script data-niil-frame="" type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "변경 이력을 남기며 협업하기", "url": "https://nii-lab.github.io/ko/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html", "author": {"@type": "Person", "name": "Ki-Baek Lee", "alternateName": "이기백", "affiliation": {"@type": "Organization", "name": "Kwangwoon University · NiiL"}, "@id": "https://nii-lab.github.io/ko/pages/ki-baek-lee-36f11249/#person"}, "license": "https://creativecommons.org/licenses/by/4.0/", "creditText": "Teaching content: Ki-Baek Lee, CC BY 4.0. Original exercise code: MIT; see course LICENSE.md. Third-party terms retained."}</script><link href="https://nii-lab.github.io/ko/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" hreflang="ko" rel="alternate"/><link href="https://nii-lab.github.io/en/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" hreflang="en" rel="alternate"/><link href="https://nii-lab.github.io/ko/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" hreflang="x-default" rel="alternate"/><link data-niil-frame="" href="/assets/niil.css?v=mlx-preview1" rel="stylesheet"/><script data-niil-frame="" defer="" src="/assets/routes.js?v=20261030-layout1"></script><script data-niil-frame="" defer="" src="/assets/niil.js?v=20261030-layout1"></script><link data-niil-frame="" href="/assets/courses.css?v=20261031-unified" rel="stylesheet"/><meta content="인공지능응용: 변경 이력을 남기며 협업하기. 본인 사본을 만들어 실행·수정·기록하세요." name="description"/><meta content="index,follow" name="robots"/><link href="https://nii-lab.github.io/ko/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" rel="canonical"/><meta content="변경 이력을 남기며 협업하기 | 인공지능응용" property="og:title"/><meta content="인공지능응용: 변경 이력을 남기며 협업하기. 본인 사본을 만들어 실행·수정·기록하세요." property="og:description"/><meta content="https://nii-lab.github.io/ko/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" property="og:url"/><meta content="website" property="og:type"/><meta content="NiiL · Kwangwoon University" property="og:site_name"/><meta content="ko_KR" property="og:locale"/><meta content="summary" name="twitter:card"/><meta content="변경 이력을 남기며 협업하기 | 인공지능응용" name="twitter:title"/><meta content="인공지능응용: 변경 이력을 남기며 협업하기. 본인 사본을 만들어 실행·수정·기록하세요." name="twitter:description"/><script data-niil-seo="" type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://nii-lab.github.io/#organization", "name": "Nature-inspired Intelligence Lab (NiiL)", "alternateName": "자연모사 인공지능 연구실", "url": "https://nii-lab.github.io/", "parentOrganization": {"@type": "CollegeOrUniversity", "name": "Kwangwoon University", "alternateName": "광운대학교"}}, {"@type": "WebPage", "@id": "https://nii-lab.github.io/ko/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html#webpage", "url": "https://nii-lab.github.io/ko/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html", "name": "변경 이력을 남기며 협업하기 | 인공지능응용", "description": "인공지능응용: 변경 이력을 남기며 협업하기. 본인 사본을 만들어 실행·수정·기록하세요.", "inLanguage": "ko", "isPartOf": {"@id": "https://nii-lab.github.io/#website"}}]}</script></head><body class="course-home niil-course" data-course-title-en="AI Applications"><a class="skip" data-niil-frame="" href="#main">본문 바로가기</a><header class="site-header" data-niil-frame=""><a aria-label="NiiL 홈" class="brand" href="/ko/">NiiL<span class="brand-dot">●</span></a><button aria-controls="site-nav" aria-expanded="false" class="menu-toggle" type="button">메뉴 ☰</button><nav aria-label="주 메뉴" id="site-nav"><a href="/ko/research/">연구</a><a href="/ko/publications/">논문</a><a href="/ko/members/">구성원</a><a aria-current="page" href="/ko/courses/">강의자료</a><a href="/ko/contact/">문의·지원</a></nav><nav aria-label="언어" class="language-switch"><a aria-current="true" data-course-language="ko" data-language="ko" href="/ko/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" lang="ko">한국어</a><span aria-hidden="true">/</span><a data-course-language="en" data-language="en" href="/en/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.preview.html" lang="en">EN</a></nav></header><main class="directory" id="main"><nav aria-label="현재 과목" class="breadcrumb" data-niil-frame=""><a data-course-label-en="AI Applications" href="/ko/courses/ai-applications/index.html">인공지능응용</a></nav><h1>변경 이력을 남기며 협업하기</h1><nav class="notebook-actions"><a download="" href="AI_Applications_Week04_GitCollaboration.ipynb">Colab 노트북 다운로드</a><a href="https://colab.research.google.com/github/nii-lab/nii-lab.github.io/blob/master/ko/courses/ai-applications/git-collaboration/AI_Applications_Week04_GitCollaboration.ipynb#copy=true" rel="noopener noreferrer" target="_blank">Colab 실행 ↗</a></nav><section class="notebook-cell">
+<p><strong>본인 사본을 만들어 실행·수정·기록하세요.</strong></p>
+<ul>
+<li>이름: <strong>⟦여기에 직접 입력⟧</strong></li>
+<li>학번: <strong>⟦여기에 직접 입력⟧</strong></li>
+</ul>
+<h2 id="실습-목적">실습 목적</h2>
+<p>수정 내용을 Commit으로 기록하고, PR에서 변경을 검토한 뒤 Merge했을 때 main에 반영되는 과정을 확인합니다. 이번 실습은 본인 Repository에서 수행하며, 동료 Repository의 Fork·PR은 선택 실습입니다.</p>
+<p>외부 기여자의 수정 제안 사례와 각 단계가 필요한 이유는 학습자료의 설명을 참고하세요.</p>
+<p><strong>실습 순서와 이유:</strong> 먼저 Colab의 임시 Repository에서 로그인·권한 설정 없이 파일 수정·Commit·Branch의 관계를 확인합니다. 이어서 GitHub 웹에 별도 저장소를 만들어 PR의 검토와 Merge를 연습합니다. Colab에서 만든 저장소를 업로드하는 과정이 아니라, Git의 변경 기록을 이해한 뒤 GitHub의 협업 기능을 사용하는 구성입니다.</p>
+<!-- exercise-guidance:ai-applications/git-collaboration/execution -->
+<ul>
+<li>Code Cell 실행: ▶ 또는 <code>Shift+Enter</code>, 위에서부터 순서대로.</li>
+<li>Text Cell 작성: 더블클릭 → <code>직접 입력</code> 작성 → <code>Shift+Enter</code>.</li>
+<li>직접 작성 셀: 본인 코드 입력.</li>
+<li>값 변경 후: 해당 셀과 뒤의 관련 셀 다시 실행. <!-- /exercise-guidance:ai-applications/git-collaboration/execution --></li>
+</ul>
+</section><section class="notebook-cell">
+<h2 id="내-작업-공간에서-git-연습하기">1. 내 작업 공간에서 Git 연습하기</h2>
+<p>Colab의 임시 폴더에서 Commit·Branch를 연습한 뒤, 아래 순서로 GitHub에서 PR·Merge를 진행하세요.</p>
+<h3 id="a.-기준-예제-먼저-읽고-실행">A. 기준 예제 · 먼저 읽고 실행</h3>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>import tempfile, pathlib, subprocess
+repo=pathlib.Path(tempfile.mkdtemp(prefix='course-git-'))
+def git(*args):
+    return subprocess.check_output(['git','-C',str(repo),*args],text=True,stderr=subprocess.STDOUT)
+git('init','-b','main');git('config','user.name','Student Example');git('config','user.email','example@example.invalid')
+(repo/'README.md').write_text('# Practice\nBaseline\n')
+git('add','README.md');git('commit','-m','Add baseline')
+git('switch','-c','practice-change')
+(repo/'README.md').write_text('# Practice\nBaseline\nMy change\n')
+print(git('diff'));git('add','README.md');git('commit','-m','Describe one change')
+print(git('log','--oneline','--all','--graph'))
+</code></pre></section><section class="notebook-cell">
+<h3 id="b.-직접-수행">B. 직접 수행</h3>
+<p>Branch는 별도로 변경을 기록하는 작업 흐름입니다. 이번에는 기본 Branch인 <code>main</code>에서 <code>practice</code>를 만들어 수정합니다. <strong>Pull Request(PR)</strong>는 이 변경을 <code>main</code>에 합치기 전에 검토해 달라는 요청이고, <strong>Merge</strong>는 검토한 변경을 실제로 합치는 작업입니다. PR을 만드는 것만으로 <code>main</code>이 바뀌지는 않습니다.</p>
+<ol type="1">
+<li><p><strong>Colab에서 변경 이력 연습:</strong> 로컬 예제의 문장을 한 줄 수정하고 <code>git diff → add → commit → log</code>를 직접 반복하세요.</p></li>
+<li><p><strong>GitHub에 연습 Repository 만들기:</strong> README를 포함한 개인 연습 Repository를 만드세요.</p></li>
+<li><p><strong>Branch에서 수정하고 Commit하기:</strong> 새 Branch <code>practice</code>를 만들고 README에 이번 주 배운 내용을 추가하여 Commit하세요.</p></li>
+<li><p><strong>PR 검토 후 Merge하기:</strong> <code>practice → main</code>의 Pull Request를 열고 <strong>Files changed</strong>에서 변경을 검토한 뒤 Merge하세요.</p></li>
+<li><p><strong>변경 전후 설명하기:</strong> 조교 또는 동료에게 두 Branch의 역할과 Merge 전후 차이를 설명하세요.</p></li>
+<li><p><strong>결과 기록하기:</strong> Repository URL, Commit 이력, PR 변경 내용과 Merge 완료 화면을 Notebook에 기록하세요.</p></li>
+</ol>
+<p>각 단계에서 변경이 어느 Branch에 기록되어 있는지 확인하세요. PR을 열었을 때와 Merge했을 때 main의 내용이 어떻게 다른지 비교합니다.</p>
+</section><section class="notebook-cell"><pre class="notebook-code"><code># ✍ 직접 작성: 이 셀 아래에 본인의 코드를 추가하세요.
+# 코드가 길어지면 Code Cell을 추가해도 됩니다.
+</code></pre></section><section class="notebook-cell">
+<h3 id="c.-직접-기록-이-text-cell을-더블클릭해서-수정">C. 직접 기록 · 이 Text Cell을 더블클릭해서 수정</h3>
+<ul>
+<li>확인하거나 바꾼 조건: <strong>⟦직접 입력⟧</strong></li>
+<li>실행 전 예상: <strong>⟦직접 입력⟧</strong></li>
+<li>Commit·PR·Merge에서 확인한 내용: <strong>⟦직접 입력⟧</strong></li>
+<li>예상과 차이 및 설명: <strong>⟦직접 입력⟧</strong></li>
+</ul>
+</section><section class="notebook-cell">
+<h2 id="변경-이력-정리">변경 이력 정리</h2>
+<p>앞에서 수행한 파일 수정·Commit·PR·Merge를 다시 보고 아래 내용을 정리하세요. 별도 Repository나 PR을 세 개 더 만들 필요는 없습니다.</p>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr>
+<th>단계</th>
+<th>확인할 것</th>
+<th>내 기록</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>수정·Commit</td>
+<td>무엇을 바꾸었고 어떤 메시지로 기록했나요?</td>
+<td>⟦직접 입력⟧</td>
+</tr>
+<tr>
+<td>PR</td>
+<td>변경 출발 Branch와 합칠 대상 Branch는 무엇인가요?</td>
+<td>⟦직접 입력⟧</td>
+</tr>
+<tr>
+<td>Merge</td>
+<td>main에 반영된 내용과 Commit 이력은 어디서 보이나요?</td>
+<td>⟦직접 입력⟧</td>
+</tr>
+</tbody>
+</table>
+</section><section class="notebook-cell"><pre class="notebook-code"><code># ✍ 반복 실험 코드
+</code></pre></section><section class="notebook-cell">
+<h2 id="선택-실습-fork와-pull-request">선택 실습 · Fork와 Pull Request</h2>
+<!-- exercise-guidance:ai-applications/git-collaboration/optional -->
+<p>함께 연습할 동료의 공개 Repository가 있을 때 진행하세요.</p>
+<ol type="1">
+<li>동료의 Repository를 Fork하고, 본인의 Fork에서 Branch를 만드세요.</li>
+<li><code>README.md</code>의 설명 한 문장을 고친 뒤 Commit하고 Push하세요.</li>
+<li>원본 Repository를 대상으로 Pull Request를 열고, 변경 이유를 한 문장으로 적으세요.</li>
+<li>노트북의 Text Cell에 Pull Request URL과 변경한 문장을 남기세요. 원본 Repository에 직접 Push할 권한이 없어도 변경을 제안할 수 있는 이유를 설명하세요. <!-- /exercise-guidance:ai-applications/git-collaboration/optional --></li>
+</ol>
+<h2 id="저장제출">저장·제출</h2>
+<p>본인 Drive에 Notebook을 저장하세요.</p>
+<!-- exercise-guidance:ai-applications/git-collaboration/submission -->
+<p>수정한 내용, Commit·Pull Request·Merge 이력, 각 단계에서 한 일을 설명한 메모를 포함하세요. 제출은 KLAS를 이용하며 기한은 학기 일정과 최신 공지를 확인합니다.</p>
+<p>GitHub 협업 결과는 저장소·Branch·PR의 변경 내용과 Merge 이력이 보이는 캡처로 남기세요. 인증 정보는 포함하지 않습니다. Notebook은 연습·기록용입니다. <!-- /exercise-guidance:ai-applications/git-collaboration/submission --></p>
+</section></main><footer class="site-footer" data-niil-frame=""><div class="footer-identity"><strong>자연모사 인공지능 연구실</strong><span>광운대학교</span></div><div class="footer-meta"><a href="/ko/courses/reuse.html">저자·이용 안내</a><small>© NiiL</small></div></footer></body></html>

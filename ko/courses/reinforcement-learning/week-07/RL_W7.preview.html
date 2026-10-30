@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>정책 기반 접근법 - REINFORCE 알고리즘 | 전기공학을 위한 강화학습</title><link data-course-ui="" href="../../../../assets/courses/course-ui.css?v=8fb1789a3067" rel="stylesheet"/><script data-course-ui="" defer="" src="../../../../assets/courses/course-ui.js?v=8fb1789a3067"></script><meta content="Ki-Baek Lee (이기백)" data-niil-frame="" name="author"/><script data-niil-frame="" type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "정책 기반 접근법 - REINFORCE 알고리즘", "url": "https://nii-lab.github.io/ko/courses/reinforcement-learning/week-07/RL_W7.preview.html", "author": {"@type": "Person", "name": "Ki-Baek Lee", "alternateName": "이기백", "affiliation": {"@type": "Organization", "name": "Kwangwoon University · NiiL"}, "@id": "https://nii-lab.github.io/ko/pages/ki-baek-lee-36f11249/#person"}, "license": "https://creativecommons.org/licenses/by/4.0/", "creditText": "Teaching content: Ki-Baek Lee, CC BY 4.0. Original exercise code: MIT; see course LICENSE.md. Third-party terms retained."}</script><link href="https://nii-lab.github.io/ko/courses/reinforcement-learning/week-07/RL_W7.preview.html" hreflang="ko" rel="alternate"/><link href="https://nii-lab.github.io/en/courses/reinforcement-learning/week-07/RL_W7.preview.html" hreflang="en" rel="alternate"/><link href="https://nii-lab.github.io/ko/courses/reinforcement-learning/week-07/RL_W7.preview.html" hreflang="x-default" rel="alternate"/><link data-niil-frame="" href="/assets/niil.css?v=mlx-preview1" rel="stylesheet"/><script data-niil-frame="" defer="" src="/assets/routes.js?v=20261030-layout1"></script><script data-niil-frame="" defer="" src="/assets/niil.js?v=20261030-layout1"></script><link data-niil-frame="" href="/assets/courses.css?v=20261031-unified" rel="stylesheet"/><meta content="전기공학을 위한 강화학습: 정책 기반 접근법 - REINFORCE 알고리즘. ∇ θ J ( θ ) = 𝔼 τ ∼ π θ [ ∑ t = 0 T ∇ θ log π θ ( a t | s t ) R t ] \nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim…" name="description"/><meta content="index,follow" name="robots"/><link href="https://nii-lab.github.io/ko/courses/reinforcement-learning/week-07/RL_W7.preview.html" rel="canonical"/><meta content="정책 기반 접근법 - REINFORCE 알고리즘 | 전기공학을 위한 강화학습" property="og:title"/><meta content="전기공학을 위한 강화학습: 정책 기반 접근법 - REINFORCE 알고리즘. ∇ θ J ( θ ) = 𝔼 τ ∼ π θ [ ∑ t = 0 T ∇ θ log π θ ( a t | s t ) R t ] \nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim…" property="og:description"/><meta content="https://nii-lab.github.io/ko/courses/reinforcement-learning/week-07/RL_W7.preview.html" property="og:url"/><meta content="website" property="og:type"/><meta content="NiiL · Kwangwoon University" property="og:site_name"/><meta content="ko_KR" property="og:locale"/><meta content="summary" name="twitter:card"/><meta content="정책 기반 접근법 - REINFORCE 알고리즘 | 전기공학을 위한 강화학습" name="twitter:title"/><meta content="전기공학을 위한 강화학습: 정책 기반 접근법 - REINFORCE 알고리즘. ∇ θ J ( θ ) = 𝔼 τ ∼ π θ [ ∑ t = 0 T ∇ θ log π θ ( a t | s t ) R t ] \nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim…" name="twitter:description"/><script data-niil-seo="" type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://nii-lab.github.io/#organization", "name": "Nature-inspired Intelligence Lab (NiiL)", "alternateName": "자연모사 인공지능 연구실", "url": "https://nii-lab.github.io/", "parentOrganization": {"@type": "CollegeOrUniversity", "name": "Kwangwoon University", "alternateName": "광운대학교"}}, {"@type": "WebPage", "@id": "https://nii-lab.github.io/ko/courses/reinforcement-learning/week-07/RL_W7.preview.html#webpage", "url": "https://nii-lab.github.io/ko/courses/reinforcement-learning/week-07/RL_W7.preview.html", "name": "정책 기반 접근법 - REINFORCE 알고리즘 | 전기공학을 위한 강화학습", "description": "전기공학을 위한 강화학습: 정책 기반 접근법 - REINFORCE 알고리즘. ∇ θ J ( θ ) = 𝔼 τ ∼ π θ [ ∑ t = 0 T ∇ θ log π θ ( a t | s t ) R t ] \\nabla_\\theta J(\\theta) = \\mathbb{E}_{\\tau \\sim…", "inLanguage": "ko", "isPartOf": {"@id": "https://nii-lab.github.io/#website"}}]}</script></head><body class="course-home niil-course" data-course-title-en="Reinforcement Learning for Electrical Engineering"><a class="skip" data-niil-frame="" href="#main">본문 바로가기</a><header class="site-header" data-niil-frame=""><a aria-label="NiiL 홈" class="brand" href="/ko/">NiiL<span class="brand-dot">●</span></a><button aria-controls="site-nav" aria-expanded="false" class="menu-toggle" type="button">메뉴 ☰</button><nav aria-label="주 메뉴" id="site-nav"><a href="/ko/research/">연구</a><a href="/ko/publications/">논문</a><a href="/ko/members/">구성원</a><a aria-current="page" href="/ko/courses/">강의자료</a><a href="/ko/contact/">문의·지원</a></nav><nav aria-label="언어" class="language-switch"><a aria-current="true" data-course-language="ko" data-language="ko" href="/ko/courses/reinforcement-learning/week-07/RL_W7.preview.html" lang="ko">한국어</a><span aria-hidden="true">/</span><a data-course-language="en" data-language="en" href="/en/courses/reinforcement-learning/week-07/RL_W7.preview.html" lang="en">EN</a></nav></header><main class="directory" id="main"><nav aria-label="현재 과목" class="breadcrumb" data-niil-frame=""><a data-course-label-en="Reinforcement Learning for Electrical Engineering" href="/ko/courses/reinforcement-learning/index.html">전기공학을 위한 강화학습</a></nav><h1>정책 기반 접근법 - REINFORCE 알고리즘</h1><nav class="notebook-actions"><a download="" href="RL_W7.ipynb">Colab 노트북 다운로드</a><a href="https://colab.research.google.com/github/nii-lab/nii-lab.github.io/blob/master/ko/courses/reinforcement-learning/week-07/RL_W7.ipynb#copy=true" rel="noopener noreferrer" target="_blank">Colab 실행 ↗</a></nav><section class="notebook-cell">
+</section><section class="notebook-cell">
+<h2 id="정책-기반-접근-policy-based-method">[정책 기반 접근 (Policy-based Method)]</h2>
+<ul>
+<li><strong>Q 함수</strong>를 명시적으로 사용 <strong>않고</strong>, <strong>정책</strong> 자체를 직접 파라미터화하여 최적화
+<ul>
+<li>정책 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mi>θ</mi></msub><mo form="prefix" stretchy="false">(</mo><mi>a</mi><mo form="prefix" stretchy="false">|</mo><mi>s</mi><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\pi_\theta(a|s)</annotation></semantics></math></span>: 상태 s에서 행동 a를 선택할 확률</li>
+</ul></li>
+<li><strong>가치 기반 방법</strong>은 <strong>상태-행동 Value Function</strong> <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>Q</mi><mo>*</mo></msup><mo form="prefix" stretchy="false">(</mo><mi>s</mi><mo>,</mo><mi>a</mi><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">Q^*(s,a)</annotation></semantics></math></span> 를 직접 근사하여 학습하고, 매 상태마다 Q 값이 최대인 행동을 선택</li>
+<li><strong>정책 기반 방법</strong>은 Value Function을 통하지 않고 정책 자체를 직접 최적화하는 접근</li>
+<li><strong>장점</strong>
+<ul>
+<li><strong>연속적</strong> 및 <strong>큰 행동 공간</strong> 처리 용이
+<ul>
+<li>Q-테이블이나 Q-함수를 모든 행동에 대해 근사하는 것이 어려운 상황에서 정책을 직접 근사하면 편리</li>
+<li><strong>확률적 정책</strong>으로 <strong>탐험</strong> 내장
+<ul>
+<li>정책이 확률적으로 행동을 샘플링하기 때문에, 별도의 탐색 전략 없이도 자연스럽게 탐색이 이루어짐</li>
+</ul></li>
+<li>정책 개선의 <strong>직관성</strong>: “정책의 기대 return을 최대화”하는 것이 목표, 직접 최적화 가능</li>
+</ul></li>
+</ul></li>
+<li><strong>단점</strong>
+<ul>
+<li>가치 기반 방법에 비해 <strong>학습이 불안정</strong>할 수 있음</li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell">
+<h2 id="reinforce-알고리즘">[REINFORCE 알고리즘]</h2>
+<ul>
+<li><strong>몬테카를로 Policy Gradient법</strong>: 에피소드 전체를 경험한 후 정책 업데이트</li>
+<li><strong>Policy Gradient 정리</strong> (Policy Gradient Theorem)
+<ul>
+<li>정책의 성능에 대한 <strong>그래디언트</strong>를 추정, 경사 상승(gradient ascent)으로 정책 파라미터 업데이트
+<ul>
+<li>정책의 성능을 개선하는 방향으로 정책 파라미터를 조정</li>
+</ul></li>
+<li>수식: <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>∇</mi><mi>θ</mi></msub><mi>J</mi><mo form="prefix" stretchy="false">(</mo><mi>θ</mi><mo form="postfix" stretchy="false">)</mo><mo>=</mo><msub><mi>E</mi><mi>π</mi></msub><mo form="prefix" maxsize="120%" minsize="120%" stretchy="true">[</mo><mspace width="0.167em"></mspace><msub><mi>∇</mi><mi>θ</mi></msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><msub><mi>π</mi><mi>θ</mi></msub><mo form="prefix" stretchy="false">(</mo><msub><mi>A</mi><mi>t</mi></msub><mo>∣</mo><msub><mi>S</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo><mspace width="0.167em"></mspace><msub><mi>G</mi><mi>t</mi></msub><mspace width="0.167em"></mspace><mo form="postfix" maxsize="120%" minsize="120%" stretchy="true">]</mo></mrow><annotation encoding="application/x-tex">\nabla_\theta J(\theta) = E_\pi \big[\, \nabla_\theta \log \pi_\theta(A_t \mid S_t)\, G_t \,\big]</annotation></semantics></math></span>
+<ul>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>G</mi><mi>t</mi></msub><annotation encoding="application/x-tex">G_t</annotation></semantics></math></span>: <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math></span> 시점부터의 <strong>반환</strong> (return)</li>
+<li><strong>직관적 의미</strong>: 보상을 많이 받은 행동들의 확률을 높이는 방향으로 정책 업데이트
+<ul>
+<li>어떤 행동을 했을 때, 그 행동이 가져다 준 결과가 좋았다면, 그 행동을 할 확률을 높이는 방식으로 학습</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><strong>업데이트 식</strong>
+<ul>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>←</mo><mi>θ</mi><mo>+</mo><mi>α</mi><mspace width="0.167em"></mspace><msub><mi>G</mi><mi>t</mi></msub><mspace width="0.167em"></mspace><msub><mi>∇</mi><mi>θ</mi></msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><msub><mi>π</mi><mi>θ</mi></msub><mo form="prefix" stretchy="false">(</mo><msub><mi>A</mi><mi>t</mi></msub><mo>∣</mo><msub><mi>S</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\theta \leftarrow \theta + \alpha\, G_t \, \nabla_\theta \log \pi_\theta(A_t \mid S_t)</annotation></semantics></math></span>
+<ul>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span>: 학습률</li>
+<li><strong>보상이 크면</strong> 그 때 실행했던 행동의 <strong>확률 증가</strong>, 보상이 나쁘면 확률 감소
+<ul>
+<li>예: 게임에서 특정 행동을 했을 때 점수를 많이 얻었다면, 다음에 비슷한 상황에서 그 행동을 선택할 확률을 높임</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><strong>REINFORCE with Advantage</strong>
+<ul>
+<li><strong>어드밴티지 함수</strong> <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>A</mi><mi>t</mi></msub><mo>=</mo><msub><mi>G</mi><mi>t</mi></msub><mo>−</mo><msup><mi>V</mi><mi>π</mi></msup><mo form="prefix" stretchy="false">(</mo><msub><mi>S</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">A_t = G_t - V^\pi(S_t)</annotation></semantics></math></span> : <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>G</mi><mi>t</mi></msub><annotation encoding="application/x-tex">G_t</annotation></semantics></math></span> 대신 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>A</mi><mi>t</mi></msub><annotation encoding="application/x-tex">A_t</annotation></semantics></math></span> 사용
+<ul>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>V</mi><mi>π</mi></msup><mo form="prefix" stretchy="false">(</mo><msub><mi>S</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">V^\pi(S_t)</annotation></semantics></math></span>: 상태 Value Function</li>
+<li>어드밴티지 함수는 특정 상태에서 행동을 했을 때 얻을 수 있는 <strong>추가적인</strong> 이득을 나타냄</li>
+<li>State Value를 Baseline으로 빼서, 해당 상태에서 기대하는 Return에 비해 얼마나 더 좋았는지로 Policy를 업데이트</li>
+</ul></li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell">
+<h2 id="reinforce-구현">[REINFORCE 구현]</h2>
+<ul>
+<li><strong>정책 네트워크</strong> 설계</li>
+<li>상태를 입력받아 행동에 대한 확률 분포를 출력하는 Neural Network</li>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mo form="prefix" stretchy="false">(</mo><mi>a</mi><mo form="prefix" stretchy="false">|</mo><mi>s</mi><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\pi(a|s)</annotation></semantics></math></span>: 상태 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math></span>에서 행동 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math></span>를 선택할 확률</li>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>ψ</mi><mi>a</mi></msub><annotation encoding="application/x-tex">\psi_a</annotation></semantics></math></span>: 행동 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math></span>에 해당하는 Layer 2의 출력 값</li>
+</ul>
+<span class="math display"><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="center" style="text-align: center"><menclose notation="box"><mrow><mrow><mtext mathvariant="normal">Input: State </mtext><mspace width="0.333em"></mspace></mrow><mo form="prefix" stretchy="false">(</mo><mi>s</mi><mo form="postfix" stretchy="false">)</mo></mrow></menclose></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>↓</mo></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><menclose notation="box"><mrow><mrow><mtext mathvariant="normal">Layer 1: Fully Connected (Linear), </mtext><mspace width="0.333em"></mspace></mrow><mi>ϕ</mi><mo>=</mo><msub><mi>W</mi><mn>1</mn></msub><mi>s</mi><mo>+</mo><msub><mi>b</mi><mn>1</mn></msub></mrow></menclose></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>↓</mo></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><menclose notation="box"><mrow><mrow><mtext mathvariant="normal">Activation Function: ReLU (Rectified Linear Unit), </mtext><mspace width="0.333em"></mspace></mrow><mi>a</mi><mo>=</mo><mrow><mi mathvariant="normal">max</mi><mo>⁡</mo></mrow><mo form="prefix" stretchy="false">(</mo><mn>0</mn><mo>,</mo><mi>ϕ</mi><mo form="postfix" stretchy="false">)</mo></mrow></menclose></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>↓</mo></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><menclose notation="box"><mrow><mrow><mtext mathvariant="normal">Layer 2: Fully Connected (Linear), </mtext><mspace width="0.333em"></mspace></mrow><mi>ψ</mi><mo>=</mo><msub><mi>W</mi><mn>2</mn></msub><mi>a</mi><mo>+</mo><msub><mi>b</mi><mn>2</mn></msub></mrow></menclose></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>↓</mo></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><menclose notation="box"><mrow><mtext mathvariant="normal">Output Activation: Softmax</mtext><mo>,</mo><mi>π</mi><mo form="prefix" stretchy="false">(</mo><mi>a</mi><mo form="prefix" stretchy="false">|</mo><mi>s</mi><mo form="postfix" stretchy="false">)</mo><mo>=</mo><mfrac><msup><mi>e</mi><msub><mi>ψ</mi><mi>a</mi></msub></msup><mrow><munder><mo>∑</mo><msup><mi>a</mi><mo>′</mo></msup></munder><msup><mi>e</mi><msub><mi>ψ</mi><msup><mi>a</mi><mo>′</mo></msup></msub></msup></mrow></mfrac></mrow></menclose></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>↓</mo></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><menclose notation="box"><mrow><mrow><mtext mathvariant="normal">Output: Action Probabilities </mtext><mspace width="0.333em"></mspace></mrow><mi>π</mi><mo form="prefix" stretchy="false">(</mo><mi>a</mi><mo form="prefix" stretchy="false">|</mo><mi>s</mi><mo form="postfix" stretchy="false">)</mo><mspace width="0.278em"></mspace></mrow></menclose></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{array}{c}
+\boxed{\text{Input: State }(s)} \\
+\downarrow \\
+\boxed{\text{Layer 1: Fully Connected (Linear), } \phi = W_1 s + b_1} \\
+\downarrow \\
+\boxed{\text{Activation Function: ReLU (Rectified Linear Unit), } a = \max(0, \phi)} \\
+\downarrow \\
+\boxed{\text{Layer 2: Fully Connected (Linear), } \psi = W_2 a + b_2} \\
+\downarrow \\
+\boxed{\text{Output Activation: Softmax}, \pi(a|s) = \frac{e^{\psi_a}}{\sum_{a'} e^{\psi_{a'}}}} \\
+\downarrow \\
+\boxed{\text{Output: Action Probabilities } \pi(a|s)\;}
+\end{array}</annotation></semantics></math></span>
+<ul>
+<li><strong>에피소드</strong>를 <strong>수집</strong>
+<ul>
+<li>환경과 상호작용하면서 상태, 행동, 보상 등의 데이터를 수집</li>
+</ul></li>
+<li><strong>수집된 에피소드</strong>를 사용하여 <strong>정책 업데이트</strong>
+<ul>
+<li>Policy Gradient 정리와 업데이트 식을 사용하여 정책 네트워크의 파라미터를 업데이트 REINFORCE 알고리즘의 정책 업데이트 과정을 수식으로 나타내면 다음과 같습니다. 핵심은 Policy Gradient(policy gradient)를 이용하여 정책 파라미터를 업데이트하는 것입니다.</li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell">
+<h3 id="기본-표기">1. 기본 표기</h3>
+<ul>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span>: 정책 Neural Network의 파라미터 (가중치, 편향)</li>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>π</mi><mi>θ</mi></msub><mo form="prefix" stretchy="false">(</mo><mi>a</mi><mo form="prefix" stretchy="false">|</mo><mi>s</mi><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\pi_\theta(a|s)</annotation></semantics></math></span>: 파라미터 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span>를 가진 정책 (상태 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math></span>에서 행동 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>a</mi><annotation encoding="application/x-tex">a</annotation></semantics></math></span>를 할 확률)</li>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>R</mi><mi>t</mi></msub><mo>=</mo><msubsup><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mi>t</mi></mrow><mi>T</mi></msubsup><msup><mi>γ</mi><mrow><mi>k</mi><mo>−</mo><mi>t</mi></mrow></msup><msub><mi>r</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">R_t = \sum_{k=t}^{T}\gamma^{k-t} r_k</annotation></semantics></math></span>: 시간 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math></span>부터 에피소드 끝까지의 할인된 총 보상
+<ul>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>r</mi><mi>k</mi></msub><annotation encoding="application/x-tex">r_k</annotation></semantics></math></span>: 시간 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math></span>에서의 보상</li>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>γ</mi><annotation encoding="application/x-tex">\gamma</annotation></semantics></math></span>: 할인율 (discount factor, <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>γ</mi><mo>≤</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">0 \le \gamma \le 1</annotation></semantics></math></span>)</li>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math></span>: 에피소드의 종료 시간</li>
+</ul></li>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>∇</mi><mi>θ</mi></msub><annotation encoding="application/x-tex">\nabla_\theta</annotation></semantics></math></span>: <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math></span>에 대한 gradient</li>
+</ul>
+</section><section class="notebook-cell">
+<h3 id="policy-gradient-policy-gradient-계산">2. Policy Gradient (Policy Gradient) 계산</h3>
+<p><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>∇</mi><mi>θ</mi></msub><mi>J</mi><mo form="prefix" stretchy="false">(</mo><mi>θ</mi><mo form="postfix" stretchy="false">)</mo><mo>=</mo><msub><mi mathvariant="double-struck">𝔼</mi><mrow><mi>τ</mi><mo>∼</mo><msub><mi>π</mi><mi>θ</mi></msub></mrow></msub><mrow><mo form="prefix" stretchy="true">[</mo><msubsup><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><mi>T</mi></msubsup><msub><mi>∇</mi><mi>θ</mi></msub><mi mathvariant="normal">log</mi><msub><mi>π</mi><mi>θ</mi></msub><mo form="prefix" stretchy="false">(</mo><msub><mi>a</mi><mi>t</mi></msub><mo form="prefix" stretchy="false">|</mo><msub><mi>s</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo><msub><mi>R</mi><mi>t</mi></msub><mo form="postfix" stretchy="true">]</mo></mrow></mrow><annotation encoding="application/x-tex">\nabla_\theta J(\theta) = \mathbb{E}_{\tau \sim \pi_\theta} \left[ \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t|s_t) R_t \right]</annotation></semantics></math></span></p>
+<ul>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>J</mi><mo form="prefix" stretchy="false">(</mo><mi>θ</mi><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">J(\theta)</annotation></semantics></math></span>: 정책의 성능 지표 (기대값)
+<ul>
+<li>REINFORCE에서는 에피소드 동안 얻은 총 보상의 기대값</li>
+</ul></li>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="double-struck">𝔼</mi><mrow><mi>τ</mi><mo>∼</mo><msub><mi>π</mi><mi>θ</mi></msub></mrow></msub><mo form="prefix" stretchy="false">[</mo><mi>⋅</mi><mo form="postfix" stretchy="false">]</mo></mrow><annotation encoding="application/x-tex">\mathbb{E}_{\tau \sim \pi_\theta}[\cdot]</annotation></semantics></math></span>: 정책 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mi>θ</mi></msub><annotation encoding="application/x-tex">\pi_\theta</annotation></semantics></math></span>를 따라 생성된 trajectory <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>τ</mi><mo>=</mo><mo form="prefix" stretchy="false">(</mo><msub><mi>s</mi><mn>0</mn></msub><mo>,</mo><msub><mi>a</mi><mn>0</mn></msub><mo>,</mo><msub><mi>r</mi><mn>1</mn></msub><mo>,</mo><msub><mi>s</mi><mn>1</mn></msub><mo>,</mo><msub><mi>a</mi><mn>1</mn></msub><mo>,</mo><mi>.</mi><mi>.</mi><mi>.</mi><mo>,</mo><msub><mi>s</mi><mi>T</mi></msub><mo>,</mo><msub><mi>a</mi><mi>T</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\tau = (s_0, a_0, r_1, s_1, a_1, ... , s_T, a_T)</annotation></semantics></math></span>에 대한 기대값</li>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>∇</mi><mi>θ</mi></msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><msub><mi>π</mi><mi>θ</mi></msub><mo form="prefix" stretchy="false">(</mo><msub><mi>a</mi><mi>t</mi></msub><mo form="prefix" stretchy="false">|</mo><msub><mi>s</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\nabla_\theta \log \pi_\theta(a_t|s_t)</annotation></semantics></math></span>: 로그 정책(log policy)의 그래디언트<br/>
+</li>
+<li>정책 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>π</mi><mi>θ</mi></msub><annotation encoding="application/x-tex">\pi_\theta</annotation></semantics></math></span>가 상태 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>s</mi><mi>t</mi></msub><annotation encoding="application/x-tex">s_t</annotation></semantics></math></span>에서 행동 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>t</mi></msub><annotation encoding="application/x-tex">a_t</annotation></semantics></math></span>를 선택할 확률을 높이는 방향을 나타냄</li>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>R</mi><mi>t</mi></msub><annotation encoding="application/x-tex">R_t</annotation></semantics></math></span>: 시간 t부터의 return</li>
+</ul>
+</section><section class="notebook-cell">
+<h3 id="정책-업데이트-policy-update-계산">3. 정책 업데이트 (Policy Update) 계산</h3>
+<ul>
+<li><p>Policy Gradient를 계산한 후, 경사 상승법(gradient ascent)을 사용하여 정책 파라미터를 업데이트</p></li>
+<li><p><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>←</mo><mi>θ</mi><mo>+</mo><mi>α</mi><msub><mi>∇</mi><mi>θ</mi></msub><mi>J</mi><mo form="prefix" stretchy="false">(</mo><mi>θ</mi><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\theta \leftarrow \theta + \alpha \nabla_\theta J(\theta)</annotation></semantics></math></span></p>
+<ul>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span>: 학습률 (learning rate)</li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell">
+<h3 id="몬테카를로-근사-monte-carlo-approximation">4. 몬테카를로 근사 (Monte Carlo Approximation)</h3>
+<ul>
+<li>실제로는 기대값을 정확하게 계산할 수 없으므로, 몬테카를로 샘플링을 사용하여 근사<br/>
+</li>
+<li>하나의 에피소드 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>τ</mi><annotation encoding="application/x-tex">\tau</annotation></semantics></math></span>를 샘플링하여 Policy Gradient를 다음과 같이 추정</li>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>∇</mi><mi>θ</mi></msub><mi>J</mi><mo form="prefix" stretchy="false">(</mo><mi>θ</mi><mo form="postfix" stretchy="false">)</mo><mo>≈</mo><msubsup><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><mi>T</mi></msubsup><msub><mi>∇</mi><mi>θ</mi></msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><msub><mi>π</mi><mi>θ</mi></msub><mo form="prefix" stretchy="false">(</mo><msub><mi>a</mi><mi>t</mi></msub><mo form="prefix" stretchy="false">|</mo><msub><mi>s</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo><msub><mi>R</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\nabla_\theta J(\theta) \approx  \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t|s_t) R_t</annotation></semantics></math></span></li>
+</ul>
+</section><section class="notebook-cell">
+<h3 id="최종-업데이트-규칙-final-update-rule">5. 최종 업데이트 규칙 (Final Update Rule)</h3>
+<ul>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>←</mo><mi>θ</mi><mo>+</mo><mi>α</mi><msubsup><mo>∑</mo><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><mi>T</mi></msubsup><msub><mi>∇</mi><mi>θ</mi></msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><msub><mi>π</mi><mi>θ</mi></msub><mo form="prefix" stretchy="false">(</mo><msub><mi>a</mi><mi>t</mi></msub><mo form="prefix" stretchy="false">|</mo><msub><mi>s</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo><msub><mi>R</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\theta \leftarrow \theta + \alpha \sum_{t=0}^{T} \nabla_\theta \log \pi_\theta(a_t|s_t) R_t</annotation></semantics></math></span>
+<ul>
+<li>로그 정책의 그래디언트 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>∇</mi><mi>θ</mi></msub><mrow><mi mathvariant="normal">log</mi><mo>⁡</mo></mrow><msub><mi>π</mi><mi>θ</mi></msub><mo form="prefix" stretchy="false">(</mo><msub><mi>a</mi><mi>t</mi></msub><mo form="prefix" stretchy="false">|</mo><msub><mi>s</mi><mi>t</mi></msub><mo form="postfix" stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">\nabla_\theta \log \pi_\theta(a_t|s_t)</annotation></semantics></math></span>
+<ul>
+<li>정책이 현재 행동을 더 많이/적게 선택하도록 하는 방향</li>
+</ul></li>
+<li><span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math></span> 이후 얻은 총 보상(return) <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>R</mi><mi>t</mi></msub><annotation encoding="application/x-tex">R_t</annotation></semantics></math></span>
+<ul>
+<li>좋은 행동이었다면 양수, 나쁜 행동이었다면 음수</li>
+</ul></li>
+<li>학습율 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></span>
+<ul>
+<li>업데이트 크기 조절</li>
+</ul></li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell">
+<h2 id="한계">[한계]</h2>
+<ul>
+<li><strong>높은 분산</strong>: 에피소드 단위로 Return 계산, 긴 에피소드/복잡한 문제에서 분산이 커져 업데이트 효율 감소
+<ul>
+<li>REINFORCE는 에피소드가 끝난 후에만 정책을 업데이트할 수 있기 때문에, 에피소드 중간에 얻은 정보를 활용하기 어려움</li>
+</ul></li>
+<li><strong>느린 반응</strong>: 에피소드가 끝나야 업데이트, 실시간 반응 어려움
+<ul>
+<li>환경의 변화에 즉각적으로 대응하기 어려움</li>
+</ul></li>
+<li><strong>해결</strong>: Actor-Critic 방법 (<strong>Next Week</strong>)
+<ul>
+<li>Actor-Critic 방법은 정책을 결정하는 Actor와 가치를 평가하는 Critic을 동시에 학습시켜, REINFORCE의 단점을 보완</li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell">
+<h2 id="실습-reinforce">[실습: REINFORCE]</h2>
+</section><section class="notebook-cell">
+<h3 id="필수-라이브러리-설치-및-가져오기">1. 필수 라이브러리 설치 및 가져오기</h3>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>import gymnasium as gym
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+from torch.distributions import Categorical
+import numpy as np
+import matplotlib.pyplot as plt
+import imageio</code></pre></section><section class="notebook-cell">
+<h3 id="하이퍼파라미터-설정">2. 하이퍼파라미터 설정</h3>
+<ul>
+<li><code>learning_rate</code>: 학습률</li>
+<li><code>gamma</code>: 할인율</li>
+<li><code>n_episodes</code>: 최대 에피소드 수</li>
+<li><code>print_interval</code>: 진행 상황 출력 주기</li>
+<li><code>early_stopping_patience</code>: 조기 종료 patience (얼마나 기다릴지)</li>
+<li><code>target_score</code>: 목표 점수 (이 점수 넘으면 학습 성공)</li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>learning_rate = 0.0003
+gamma = 0.99
+n_episodes = 3000  # 최대 에피소드 수
+print_interval = 50 # 중간 결과 출력 주기
+early_stopping_patience = 10 # 연속으로 target_score를 넘기는 횟수
+target_score = 400  # CartPole-v1 성공 기준 (보통 200점 이상 성공)</code></pre></section><section class="notebook-cell">
+<h3 id="neural-network-모델-policy-network-정의">3. Neural Network 모델 (Policy Network) 정의</h3>
+<ul>
+<li>간단한 2층 Neural Network (입력층-은닉층-출력층)</li>
+<li><code>forward()</code>: <code>softmax</code>로 확률 분포 반환</li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>class Policy(nn.Module):
+    def __init__(self, state_size, action_size, hidden_size=32):
+        super(Policy, self).__init__()
+        self.fc1 = nn.Linear(state_size, hidden_size)
+        self.fc2 = nn.Linear(hidden_size, action_size)
+
+    def forward(self, x):
+        x = F.relu(self.fc1(x))
+        x = self.fc2(x)
+        return F.softmax(x, dim=0)  # 단일 state에 대한 확률</code></pre></section><section class="notebook-cell">
+<h3 id="reinforce-알고리즘-구현-train-함수">4. REINFORCE 알고리즘 구현 (train 함수)</h3>
+<ul>
+<li><code>optimizer</code>: Adam 옵티마이저 사용</li>
+<li>에피소드별:
+<ul>
+<li><code>rewards</code>, <code>log_probs</code>: 보상, 로그 확률 저장 리스트</li>
+<li><code>done</code>이 <code>True</code>일 때까지:
+<ul>
+<li><code>policy(state)</code>로 확률 분포 얻고, <code>Categorical</code>로 행동 샘플링, 로그 확률 계산</li>
+<li><code>env.step()</code>으로 행동, 보상, 종료 여부 등 받음</li>
+<li><code>rewards</code>, <code>log_probs</code>에 저장</li>
+<li><code>state</code> 업데이트</li>
+</ul></li>
+<li>에피소드 끝나면:
+<ul>
+<li><code>R</code>: return (할인된 총 보상) 계산</li>
+<li><code>policy_loss</code>: <code>-log_prob * R</code>의 합 (기본 REINFORCE 손실)</li>
+<li><code>optimizer</code>로 policy 업데이트 (경사 상승)</li>
+</ul></li>
+<li><code>print_interval</code>마다 평균 점수 출력, 조기 종료 조건 확인</li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>def train(env, policy, optimizer, n_episodes, gamma, print_interval, early_stopping_patience, target_score):
+    scores = []
+
+    for i_episode in range(1, n_episodes + 1):
+        state, _ = env.reset()
+        if isinstance(state, tuple):
+            state = state[0]  # gym 버전 호환
+        state = torch.from_numpy(state).float()
+
+        rewards = []
+        log_probs = []
+        done = False
+
+        while not done:
+            probs = policy(state)
+            m = Categorical(probs)
+            action = m.sample()
+            log_prob = m.log_prob(action)
+            next_state, reward, terminated, truncated, _ = env.step(action.item())
+            rewards.append(reward)
+            log_probs.append(log_prob)
+            state = torch.from_numpy(next_state).float()
+            done = terminated or truncated
+
+        # Return 계산
+        R = 0
+        returns = []
+        for r in reversed(rewards):
+            R = r + gamma * R
+            returns.insert(0, R)
+
+        # Policy Loss 계산 (기본적인 형태)
+        returns = torch.tensor(returns) # list를 tensor로
+        log_probs = torch.stack(log_probs) # list of tensor를 tensor로
+        policy_loss = torch.sum(-log_probs * returns)
+
+        optimizer.zero_grad()
+        policy_loss.backward()
+        optimizer.step()
+
+        total_reward = sum(rewards)
+        scores.append(total_reward)
+
+        if (i_episode+1) % print_interval == 0:
+            avg_score = np.mean(scores[-print_interval:])
+            print(f"Episode {(i_episode+1)}\tAverage Score: {avg_score:.2f}")
+
+        if np.min(scores[-early_stopping_patience:])&gt;=target_score:
+            print(f"Early stopping after {i_episode+1} episodes.  Target score reached.")
+            break
+
+    return scores</code></pre></section><section class="notebook-cell">
+<h3 id="학습-실행-및-결과-확인">5. 학습 실행 및 결과 확인</h3>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>env = gym.make('CartPole-v1', render_mode = 'rgb_array')
+state_size = env.observation_space.shape[0]
+action_size = env.action_space.n
+
+policy = Policy(state_size, action_size)
+optimizer = optim.Adam(policy.parameters(), lr=learning_rate)
+
+scores = train(env, policy, optimizer, n_episodes, gamma, print_interval, early_stopping_patience, target_score)
+
+plt.plot(scores)
+plt.xlabel("Episode")
+plt.ylabel("Score")
+plt.show()</code></pre><pre class="notebook-output">Episode 50	Average Score: 29.59
+Episode 100	Average Score: 29.46
+Episode 150	Average Score: 22.94
+Episode 200	Average Score: 28.10
+Episode 250	Average Score: 33.60
+Episode 300	Average Score: 31.22
+Episode 350	Average Score: 35.42
+Episode 400	Average Score: 38.36
+Episode 450	Average Score: 33.10
+Episode 500	Average Score: 42.88
+Episode 550	Average Score: 46.48
+Episode 600	Average Score: 55.06
+Episode 650	Average Score: 52.90
+Episode 700	Average Score: 56.98
+Episode 750	Average Score: 60.50
+Episode 800	Average Score: 49.84
+Episode 850	Average Score: 61.66
+Episode 900	Average Score: 68.46
+Episode 950	Average Score: 70.76
+Episode 1000	Average Score: 87.88
+Episode 1050	Average Score: 95.34
+Episode 1100	Average Score: 104.16
+Episode 1150	Average Score: 112.28
+Episode 1200	Average Score: 161.80
+Episode 1250	Average Score: 148.26
+Episode 1300	Average Score: 151.28
+Episode 1350	Average Score: 194.38
+Episode 1400	Average Score: 209.04
+Episode 1450	Average Score: 223.46
+Episode 1500	Average Score: 213.40
+Episode 1550	Average Score: 205.94
+Episode 1600	Average Score: 242.70
+Episode 1650	Average Score: 268.14
+Episode 1700	Average Score: 300.26
+Episode 1750	Average Score: 250.06
+Episode 1800	Average Score: 279.60
+Episode 1850	Average Score: 279.02
+Episode 1900	Average Score: 287.54
+Episode 1950	Average Score: 301.08
+Episode 2000	Average Score: 335.34
+Episode 2050	Average Score: 351.32
+Episode 2100	Average Score: 341.72
+Episode 2150	Average Score: 298.76
+Episode 2200	Average Score: 313.38
+Episode 2250	Average Score: 331.06
+Episode 2300	Average Score: 368.56
+Episode 2350	Average Score: 353.54
+Episode 2400	Average Score: 340.40
+Episode 2450	Average Score: 376.02
+Early stopping after 2482 episodes.  Target score reached.
+</pre><pre class="notebook-output">&lt;Figure size 640x480 with 1 Axes&gt;</pre><img alt="실행 결과" src="data:image/png;base64,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
+"/></section><section class="notebook-cell"><pre class="notebook-code"><code>state, _ = env.reset()
+if isinstance(state, tuple):
+    state = state[0]
+state = torch.from_numpy(state).float()
+
+frames = []
+total_reward = 0
+done = False
+
+while not done:
+    probs = policy(state)
+    m = Categorical(probs)
+    action = m.sample()
+
+    next_state, reward, terminated, truncated, _ = env.step(action.item())
+    total_reward += reward
+    state = torch.from_numpy(next_state).float()
+    done = terminated or truncated
+    frames.append(env.render())
+
+imageio.mimsave("cartpole_simulation_reinforce.gif", frames, duration=33)  # duration 조절
+print(f"Total reward: {total_reward}")
+env.close()
+</code></pre><pre class="notebook-output">Total reward: 500.0
+</pre></section></main><footer class="site-footer" data-niil-frame=""><div class="footer-identity"><strong>자연모사 인공지능 연구실</strong><span>광운대학교</span></div><div class="footer-meta"><a href="/ko/courses/reuse.html">저자·이용 안내</a><small>© NiiL</small></div></footer></body></html>

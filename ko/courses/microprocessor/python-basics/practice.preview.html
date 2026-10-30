@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+<html lang="ko"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Python 기초 | 마이크로프로세서응용설계</title><link data-course-ui="" href="../../../../assets/courses/course-ui.css?v=8fb1789a3067" rel="stylesheet"/><script data-course-ui="" defer="" src="../../../../assets/courses/course-ui.js?v=8fb1789a3067"></script><meta content="Ki-Baek Lee (이기백)" data-niil-frame="" name="author"/><script data-niil-frame="" type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Python 기초", "url": "https://nii-lab.github.io/ko/courses/microprocessor/python-basics/practice.preview.html", "author": {"@type": "Person", "name": "Ki-Baek Lee", "alternateName": "이기백", "affiliation": {"@type": "Organization", "name": "Kwangwoon University · NiiL"}, "@id": "https://nii-lab.github.io/ko/pages/ki-baek-lee-36f11249/#person"}, "license": "https://creativecommons.org/licenses/by/4.0/", "creditText": "Teaching content: Ki-Baek Lee, CC BY 4.0. Original exercise code: MIT; see course LICENSE.md. Third-party terms retained."}</script><link href="https://nii-lab.github.io/ko/courses/microprocessor/python-basics/practice.preview.html" hreflang="ko" rel="alternate"/><link href="https://nii-lab.github.io/en/courses/microprocessor/python-basics/practice.preview.html" hreflang="en" rel="alternate"/><link href="https://nii-lab.github.io/ko/courses/microprocessor/python-basics/practice.preview.html" hreflang="x-default" rel="alternate"/><link data-niil-frame="" href="/assets/niil.css?v=mlx-preview1" rel="stylesheet"/><script data-niil-frame="" defer="" src="/assets/routes.js?v=20261030-layout1"></script><script data-niil-frame="" defer="" src="/assets/niil.js?v=20261030-layout1"></script><link data-niil-frame="" href="/assets/courses.css?v=20261031-unified" rel="stylesheet"/><meta content="마이크로프로세서응용설계: Python 기초. 센서 기록에는 누락과 경계값이 섞입니다. 정상 자료와 예외 자료를 같은 함수로 처리해 봅니다." name="description"/><meta content="index,follow" name="robots"/><link href="https://nii-lab.github.io/ko/courses/microprocessor/python-basics/practice.preview.html" rel="canonical"/><meta content="Python 기초 | 마이크로프로세서응용설계" property="og:title"/><meta content="마이크로프로세서응용설계: Python 기초. 센서 기록에는 누락과 경계값이 섞입니다. 정상 자료와 예외 자료를 같은 함수로 처리해 봅니다." property="og:description"/><meta content="https://nii-lab.github.io/ko/courses/microprocessor/python-basics/practice.preview.html" property="og:url"/><meta content="website" property="og:type"/><meta content="NiiL · Kwangwoon University" property="og:site_name"/><meta content="ko_KR" property="og:locale"/><meta content="summary" name="twitter:card"/><meta content="Python 기초 | 마이크로프로세서응용설계" name="twitter:title"/><meta content="마이크로프로세서응용설계: Python 기초. 센서 기록에는 누락과 경계값이 섞입니다. 정상 자료와 예외 자료를 같은 함수로 처리해 봅니다." name="twitter:description"/><script data-niil-seo="" type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://nii-lab.github.io/#organization", "name": "Nature-inspired Intelligence Lab (NiiL)", "alternateName": "자연모사 인공지능 연구실", "url": "https://nii-lab.github.io/", "parentOrganization": {"@type": "CollegeOrUniversity", "name": "Kwangwoon University", "alternateName": "광운대학교"}}, {"@type": "WebPage", "@id": "https://nii-lab.github.io/ko/courses/microprocessor/python-basics/practice.preview.html#webpage", "url": "https://nii-lab.github.io/ko/courses/microprocessor/python-basics/practice.preview.html", "name": "Python 기초 | 마이크로프로세서응용설계", "description": "마이크로프로세서응용설계: Python 기초. 센서 기록에는 누락과 경계값이 섞입니다. 정상 자료와 예외 자료를 같은 함수로 처리해 봅니다.", "inLanguage": "ko", "isPartOf": {"@id": "https://nii-lab.github.io/#website"}}]}</script></head><body class="course-home niil-course" data-course-title-en="Microprocessor Applications"><a class="skip" data-niil-frame="" href="#main">본문 바로가기</a><header class="site-header" data-niil-frame=""><a aria-label="NiiL 홈" class="brand" href="/ko/">NiiL<span class="brand-dot">●</span></a><button aria-controls="site-nav" aria-expanded="false" class="menu-toggle" type="button">메뉴 ☰</button><nav aria-label="주 메뉴" id="site-nav"><a href="/ko/research/">연구</a><a href="/ko/publications/">논문</a><a href="/ko/members/">구성원</a><a aria-current="page" href="/ko/courses/">강의자료</a><a href="/ko/contact/">문의·지원</a></nav><nav aria-label="언어" class="language-switch"><a aria-current="true" data-course-language="ko" data-language="ko" href="/ko/courses/microprocessor/python-basics/practice.preview.html" lang="ko">한국어</a><span aria-hidden="true">/</span><a data-course-language="en" data-language="en" href="/en/courses/microprocessor/python-basics/practice.preview.html" lang="en">EN</a></nav></header><main class="directory" id="main"><nav aria-label="현재 과목" class="breadcrumb" data-niil-frame=""><a data-course-label-en="Microprocessor Applications" href="/ko/courses/microprocessor/index.html">마이크로프로세서응용설계</a></nav><h1>Python 기초</h1><nav class="notebook-actions"><a download="" href="practice.ipynb">Colab 노트북 다운로드</a><a href="https://colab.research.google.com/github/nii-lab/nii-lab.github.io/blob/master/ko/courses/microprocessor/python-basics/practice.ipynb#copy=true" rel="noopener noreferrer" target="_blank">Colab 실행 ↗</a></nav><section class="notebook-cell">
+</section><section class="notebook-cell">
+<h2 id="학습-목표">학습 목표</h2>
+<!-- exercise-guidance:microprocessor/python-basics/objective -->
+<p>센서 기록에는 누락과 경계값이 섞입니다. 정상 자료와 예외 자료를 같은 함수로 처리해 봅니다. <!-- /exercise-guidance:microprocessor/python-basics/objective --></p>
+</section><section class="notebook-cell">
+<h2 id="센서-기록을-자료구조로-표현">센서 기록을 자료구조로 표현</h2>
+<!-- exercise-guidance:microprocessor/python-basics/activity-1 -->
+<h3 id="시작-조건">시작 조건</h3>
+<p>기록은 [(0,21.0),(1,21.5),(2,None),(3,22.0),(4,20.5)]이며, 각 쌍은 시간[s]·온도[°C]입니다.</p>
+<h3 id="진행-방법">진행 방법</h3>
+<ol type="1">
+<li>List의 각 항목을 time·temperature가 있는 Dictionary로 바꾸세요.</li>
+<li>None을 제외한 표본의 개수·평균·최솟값·최댓값을 구하세요.</li>
+<li>입력 원본을 변경하지 않는 summarize 함수를 작성하세요.</li>
+</ol>
+<h3 id="남길-결과">남길 결과</h3>
+<ul>
+<li><p>5행 기록 표, 요약 통계 4개, 함수 코드.</p></li>
+<li><p><code>summarize(rows)</code> 입력: <code>time</code>·<code>temperature</code>를 가진 Dictionary의 List.</p></li>
+<li><p>통계 대상: <code>temperature</code>.</p></li>
+<li><p>반환 필드: 유효 표본 수·평균·최솟값·최댓값. 같은 필드 유지. <!-- /exercise-guidance:microprocessor/python-basics/activity-1 --></p></li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>records=[(0,21.),(1,21.5),(2,None),(3,22.),(4,20.5)]
+valid=[value for _,value in records if value is not None]
+print('valid count',len(valid),'mean',sum(valid)/len(valid))
+# TODO: dict 변환과 summarize 함수를 추가하세요.
+</code></pre></section><section class="notebook-cell">
+<h2 id="결과-기록자가-점검">결과 기록·자가 점검</h2>
+<!-- exercise-guidance:microprocessor/python-basics/activity-1-record -->
+<p><strong>t [s]:</strong></p>
+<p><strong>온도 [°C]:</strong></p>
+<p><strong>유효 여부:</strong></p>
+<h3 id="확인할-점">확인할 점</h3>
+<ul>
+<li>None을 0°C로 해석하지 않았는가?</li>
+<li>원본 List가 함수 호출 전후 동일한가? <!-- /exercise-guidance:microprocessor/python-basics/activity-1-record --></li>
+</ul>
+</section><section class="notebook-cell">
+<h2 id="경계값과-빈-입력">경계값과 빈 입력</h2>
+<!-- exercise-guidance:microprocessor/python-basics/activity-2 -->
+<h3 id="시작-조건-1">시작 조건</h3>
+<p>코드의 <code>cases</code>에 있는 세 입력을 각각 활동 1과 같은 Dictionary List로 변환한 뒤 <code>summarize</code>에 넣습니다. 빈 List는 그대로 두고, 각 쌍의 첫 값은 <code>time</code>, 둘째 값은 <code>temperature</code>에 대응시킵니다.</p>
+<h3 id="진행-방법-1">진행 방법</h3>
+<ol type="1">
+<li>유효 표본이 0개일 때 평균을 None으로 돌려주도록 정하세요.</li>
+<li>한 표본과 여러 표본에서 같은 반환 필드를 사용하는지 확인하세요.</li>
+<li>assert로 빈 입력·결측 입력·한 표본 입력을 각각 검사하세요.</li>
+</ol>
+<h3 id="남길-결과-1">남길 결과</h3>
+<ul>
+<li>경계값 3행 표와 통과한 assert 3개. <!-- /exercise-guidance:microprocessor/python-basics/activity-2 --></li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>cases=[[],[(0,None)],[(0,25.)]]
+# TODO: summarize 결과와 assert를 작성하세요.
+</code></pre></section><section class="notebook-cell">
+<h2 id="결과-기록자가-점검-1">결과 기록·자가 점검</h2>
+<!-- exercise-guidance:microprocessor/python-basics/activity-2-record -->
+<p><strong>입력 종류:</strong></p>
+<p><strong>유효 수:</strong></p>
+<p><strong>평균:</strong></p>
+<p><strong>처리 이유:</strong></p>
+<h3 id="확인할-점-1">확인할 점</h3>
+<ul>
+<li>0개 표본에서 0으로 나누지 않는가?</li>
+<li>반환 필드가 입력 크기에 따라 바뀌지 않는가? <!-- /exercise-guidance:microprocessor/python-basics/activity-2-record --></li>
+</ul>
+</section><section class="notebook-cell">
+<h2 id="반복-측정을-함수로-정리">반복 측정을 함수로 정리</h2>
+<!-- exercise-guidance:microprocessor/python-basics/activity-3 -->
+<h3 id="시작-조건-2">시작 조건</h3>
+<p>두 장치 <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mrow><mo form="prefix" stretchy="true">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>21</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>22</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>23</mn></mtd></mtr></mtable><mo form="postfix" stretchy="true">]</mo></mrow></mrow><annotation encoding="application/x-tex">A=\begin{bmatrix}21&amp;22&amp;23\end{bmatrix}</annotation></semantics></math></span>, B=[19,None,20,21]을 비교합니다. 원본과 같은 온도 단위입니다.</p>
+<h3 id="진행-방법-2">진행 방법</h3>
+<ol type="1">
+<li>장치별 온도 List를 <code>time</code>·<code>temperature</code>가 있는 Dictionary List로 바꾸어 같은 <code>summarize</code> 함수에 넣으세요. 이 자료에는 시각이 없으므로 <code>time=None</code>으로 두고 온도만 요약합니다.</li>
+<li>장치별 유효 표본 수·평균·범위를 한 표에 적으세요.</li>
+<li>표본 수와 결측 유무가 다른 자료를 비교할 때 확인할 점을 간단히 정리하세요.</li>
+</ol>
+<h3 id="남길-결과-2">남길 결과</h3>
+<ul>
+<li>장치 비교 표와 짧은 해석. <!-- /exercise-guidance:microprocessor/python-basics/activity-3 --></li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>devices={'A':[21,22,23],'B':[19,None,20,21]}
+# TODO: 같은 함수로 장치별 요약을 작성하세요.
+</code></pre></section><section class="notebook-cell">
+<h2 id="결과-기록자가-점검-2">결과 기록·자가 점검</h2>
+<!-- exercise-guidance:microprocessor/python-basics/activity-3-record -->
+<p><strong>장치:</strong></p>
+<p><strong>유효 수:</strong></p>
+<p><strong>평균 [°C]:</strong></p>
+<p><strong>최소·최대 [°C]:</strong></p>
+<p><strong>결측 수:</strong></p>
+<h3 id="확인할-점-2">확인할 점</h3>
+<ul>
+<li>같은 계산 코드를 복사해 따로 고치지 않고 함수를 재사용했는가?</li>
+<li>장치 차이와 표본 구성 차이를 구분했는가? <!-- /exercise-guidance:microprocessor/python-basics/activity-3-record --></li>
+</ul>
+</section></main><footer class="site-footer" data-niil-frame=""><div class="footer-identity"><strong>자연모사 인공지능 연구실</strong><span>광운대학교</span></div><div class="footer-meta"><a href="/ko/courses/reuse.html">저자·이용 안내</a><small>© NiiL</small></div></footer></body></html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Image Classification (MNIST) | AI Applications</title><link data-course-ui="" href="/assets/courses/course-ui.css?v=8fb1789a3067" rel="stylesheet"/><script data-course-ui="" defer="" src="/assets/courses/course-ui.js?v=8fb1789a3067"></script><meta content="f7f47076e23bac8a884f64a2fb62b624f79eaa54cca7750822706e383411081f" name="notebook-source-sha256"/><meta content="a7a0f623e8a37da44511f08a5783192f789bacc46e5bc6313d894dd557a94974" name="notebook-renderer-sha256"/><meta content="Ki-Baek Lee (이기백)" data-niil-frame="" name="author"/><script data-niil-frame="" type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Image Classification (MNIST)", "url": "https://nii-lab.github.io/en/courses/ai-applications/image-classification/L17_Image_Classification_MNIST.preview.html", "author": {"@type": "Person", "name": "Ki-Baek Lee", "alternateName": "이기백", "affiliation": {"@type": "Organization", "name": "Kwangwoon University · NiiL"}, "@id": "https://nii-lab.github.io/ko/pages/ki-baek-lee-36f11249/#person"}, "license": "https://creativecommons.org/licenses/by/4.0/", "creditText": "Teaching content: Ki-Baek Lee, CC BY 4.0. Original exercise code: MIT; see course LICENSE.md. Third-party terms retained."}</script><link href="https://nii-lab.github.io/ko/courses/ai-applications/image-classification/L17_Image_Classification_MNIST.preview.html" hreflang="ko" rel="alternate"/><link href="https://nii-lab.github.io/en/courses/ai-applications/image-classification/L17_Image_Classification_MNIST.preview.html" hreflang="en" rel="alternate"/><link href="https://nii-lab.github.io/ko/courses/ai-applications/image-classification/L17_Image_Classification_MNIST.preview.html" hreflang="x-default" rel="alternate"/><link data-niil-frame="" href="/assets/niil.css?v=mlx-preview1" rel="stylesheet"/><script data-niil-frame="" defer="" src="/assets/routes.js?v=20261030-layout1"></script><script data-niil-frame="" defer="" src="/assets/niil.js?v=20261030-layout1"></script><link data-niil-frame="" href="/assets/courses.css?v=20261031-unified" rel="stylesheet"/><meta content="AI Applications: Image Classification (MNIST)." name="description"/><meta content="index,follow" name="robots"/><link href="https://nii-lab.github.io/en/courses/ai-applications/image-classification/L17_Image_Classification_MNIST.preview.html" rel="canonical"/><meta content="Image Classification (MNIST) | AI Applications" property="og:title"/><meta content="AI Applications: Image Classification (MNIST)." property="og:description"/><meta content="https://nii-lab.github.io/en/courses/ai-applications/image-classification/L17_Image_Classification_MNIST.preview.html" property="og:url"/><meta content="website" property="og:type"/><meta content="NiiL · Kwangwoon University" property="og:site_name"/><meta content="en_US" property="og:locale"/><meta content="summary" name="twitter:card"/><meta content="Image Classification (MNIST) | AI Applications" name="twitter:title"/><meta content="AI Applications: Image Classification (MNIST)." name="twitter:description"/><script data-niil-seo="" type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://nii-lab.github.io/#organization", "name": "Nature-inspired Intelligence Lab (NiiL)", "alternateName": "자연모사 인공지능 연구실", "url": "https://nii-lab.github.io/", "parentOrganization": {"@type": "CollegeOrUniversity", "name": "Kwangwoon University", "alternateName": "광운대학교"}}, {"@type": "WebPage", "@id": "https://nii-lab.github.io/en/courses/ai-applications/image-classification/L17_Image_Classification_MNIST.preview.html#webpage", "url": "https://nii-lab.github.io/en/courses/ai-applications/image-classification/L17_Image_Classification_MNIST.preview.html", "name": "Image Classification (MNIST) | AI Applications", "description": "AI Applications: Image Classification (MNIST).", "inLanguage": "en", "isPartOf": {"@id": "https://nii-lab.github.io/#website"}}]}</script></head><body class="course-home niil-course" data-course-title-en="AI Applications"><a class="skip" data-niil-frame="" href="#main">Skip to content</a><header class="site-header" data-niil-frame=""><a aria-label="NiiL home" class="brand" href="/en/">NiiL<span class="brand-dot">●</span></a><button aria-controls="site-nav" aria-expanded="false" class="menu-toggle" type="button">Menu ☰</button><nav aria-label="Main navigation" id="site-nav"><a href="/en/research/">Research</a><a href="/en/publications/">Publications</a><a href="/en/members/">People</a><a aria-current="page" href="/en/courses/">Course</a><a href="/en/contact/">Contact</a></nav><nav aria-label="Language" class="language-switch"><a data-course-language="ko" data-language="ko" href="/ko/courses/ai-applications/image-classification/L17_Image_Classification_MNIST.preview.html" lang="ko">한국어</a><span aria-hidden="true">/</span><a aria-current="true" data-course-language="en" data-language="en" href="/en/courses/ai-applications/image-classification/L17_Image_Classification_MNIST.preview.html" lang="en">EN</a></nav></header><main class="directory" id="main"><nav aria-label="Current course" class="breadcrumb" data-niil-frame=""><a data-course-label-en="AI Applications" href="/en/courses/ai-applications/index.html">AI Applications</a></nav><h1>Image Classification (MNIST)</h1><p class="translation-note" data-translation-note="">English translation</p><nav class="notebook-actions"><a download="L17_Image_Classification_MNIST.ipynb" href="/en/courses/ai-applications/image-classification/L17_Image_Classification_MNIST.ipynb">Download Colab notebook</a><a href="https://colab.research.google.com/github/nii-lab/nii-lab.github.io/blob/master/en/courses/ai-applications/image-classification/L17_Image_Classification_MNIST.ipynb#copy=true" rel="noopener noreferrer" target="_blank">Run in Colab ↗</a></nav><section class="notebook-cell">
+</section><section class="notebook-cell">
+<h3 id="imports">Imports</h3>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>import torch
+import torchvision.datasets as dsets
+import torchvision.transforms as transforms
+import torch.nn.init
+from torch.utils.data import DataLoader
+
+import random
+import matplotlib.pyplot as plt
+
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print(device)
+
+# for reproducibility
+torch.manual_seed(777)
+if device == 'cuda':
+    torch.cuda.manual_seed_all(777)</code></pre><pre class="notebook-output">cuda
+</pre></section><section class="notebook-cell">
+<span id="mnist-dataset"></span><h3 id="1-mnist-dataset">1 MNIST dataset</h3>
+</section><section class="notebook-cell"><pre class="notebook-code"><code># MNIST dataset
+mnist_train = dsets.MNIST(root='MNIST_data/',
+                          train=True,
+                          transform=transforms.ToTensor(),
+                          download=True)
+
+mnist_test = dsets.MNIST(root='MNIST_data/',
+                         train=False,
+                         transform=transforms.ToTensor(),
+                         download=True)</code></pre><pre class="notebook-output">Downloading http://yann.lecun.com/exdb/mnist/train-images-idx3-ubyte.gz
+Failed to download (trying next):
+HTTP Error 403: Forbidden
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-images-idx3-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-images-idx3-ubyte.gz to MNIST_data/MNIST/raw/train-images-idx3-ubyte.gz
+</pre><pre class="notebook-output">100%|██████████| 9912422/9912422 [00:00&lt;00:00, 17901167.12it/s]
+</pre><pre class="notebook-output">Extracting MNIST_data/MNIST/raw/train-images-idx3-ubyte.gz to MNIST_data/MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/train-labels-idx1-ubyte.gz
+Failed to download (trying next):
+HTTP Error 403: Forbidden
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-labels-idx1-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/train-labels-idx1-ubyte.gz to MNIST_data/MNIST/raw/train-labels-idx1-ubyte.gz
+</pre><pre class="notebook-output">100%|██████████| 28881/28881 [00:00&lt;00:00, 515824.43it/s]
+</pre><pre class="notebook-output">Extracting MNIST_data/MNIST/raw/train-labels-idx1-ubyte.gz to MNIST_data/MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-images-idx3-ubyte.gz
+Failed to download (trying next):
+HTTP Error 403: Forbidden
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-images-idx3-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-images-idx3-ubyte.gz to MNIST_data/MNIST/raw/t10k-images-idx3-ubyte.gz
+</pre><pre class="notebook-output">100%|██████████| 1648877/1648877 [00:00&lt;00:00, 1925518.73it/s]
+</pre><pre class="notebook-output">Extracting MNIST_data/MNIST/raw/t10k-images-idx3-ubyte.gz to MNIST_data/MNIST/raw
+
+Downloading http://yann.lecun.com/exdb/mnist/t10k-labels-idx1-ubyte.gz
+Failed to download (trying next):
+HTTP Error 403: Forbidden
+
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-labels-idx1-ubyte.gz
+Downloading https://ossci-datasets.s3.amazonaws.com/mnist/t10k-labels-idx1-ubyte.gz to MNIST_data/MNIST/raw/t10k-labels-idx1-ubyte.gz
+</pre><pre class="notebook-output">100%|██████████| 4542/4542 [00:00&lt;00:00, 3221804.29it/s]</pre><pre class="notebook-output">Extracting MNIST_data/MNIST/raw/t10k-labels-idx1-ubyte.gz to MNIST_data/MNIST/raw
+
+</pre><pre class="notebook-output">
+</pre></section><section class="notebook-cell"><pre class="notebook-code"><code># dataset loader
+batch_size = 100
+data_loader = DataLoader(dataset=mnist_train,
+                                          batch_size=batch_size,
+                                          shuffle=True,
+                                          drop_last=True)</code></pre></section><section class="notebook-cell">
+<p><span id="cnn-model"></span></p>
+<h3 id="2-cnn-model">2 CNN model</h3>
+<ul>
+<li>Input (input structure)
+<ul>
+<li>Input type: <code>torch.Tensor</code></li>
+<li>Input shape: (N x C x H x W)
+<ul>
+<li>N: Batch size, C: # of channels, H: height, W: width</li>
+</ul></li>
+<li>(?, 1, 28, 28)
+<ul>
+<li>Assume multiple grayscale images of size 28x28</li>
+</ul></li>
+</ul></li>
+<li>Layer design
+<ul>
+<li>Layer 1
+<ul>
+<li>Conv2d &gt;&gt; C: 32, Kernel size (filter size): 3, Stride: 1, Padding: 1</li>
+<li>ReLU</li>
+<li>MaxPool &gt;&gt; Kernel size: 2, Stride: 2</li>
+<li>Input–output (?, 1, 28, 28) &gt;&gt; (?, 32, 14, 14)</li>
+</ul></li>
+<li>Layer 2
+<ul>
+<li>Conv2d &gt;&gt; C: 64, Kernel size (filter size): 3, Stride: 1, Padding: 1</li>
+<li>ReLU</li>
+<li>MaxPool &gt;&gt; Kernel size: 2, Stride: 2</li>
+<li>Input–output (?, 32, 14, 14) &gt;&gt; (?, 64, 7, 7)</li>
+</ul></li>
+<li>Layer 3
+<ul>
+<li>Linear &gt;&gt; input: 7x7x64 output: 10</li>
+<li>Softmax</li>
+</ul></li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>class CNN(torch.nn.Module):
+
+    def __init__(self):
+        super(CNN, self).__init__()
+        # L1 Input shape=(?, 1, 28, 28)
+        #    Conv     -&gt; (?, 32, 28, 28)
+        #    Pool     -&gt; (?, 32, 14, 14)
+        self.layer1 = torch.nn.Sequential(
+            torch.nn.Conv2d(1, 32, kernel_size=3, stride=1, padding=1),
+            torch.nn.ReLU(),
+            torch.nn.MaxPool2d(kernel_size=2, stride=2))
+        # L2 Input shape=(?, 32, 14, 14)
+        #    Conv      -&gt;(?, 64, 14, 14)
+        #    Pool      -&gt;(?, 64, 7, 7)
+        self.layer2 = torch.nn.Sequential(
+            torch.nn.Conv2d(32, 64, kernel_size=3, stride=1, padding=1),
+            torch.nn.ReLU(),
+            torch.nn.MaxPool2d(kernel_size=2, stride=2))
+        # L3 Linear 64x7x7 inputs -&gt; 10 outputs
+        self.fc = torch.nn.Linear(64*7*7, 10, bias=True)
+        torch.nn.init.xavier_uniform_(self.fc.weight)
+
+    def forward(self, x):
+        out = self.layer1(x)
+        out = self.layer2(out)
+        out = out.view(out.size(0), -1)   # Flatten them for FC
+        out = self.fc(out)
+        return out</code></pre></section><section class="notebook-cell">
+<p><span id="학습하기"></span></p>
+<h3 id="3-training">3 Training</h3>
+</section><section class="notebook-cell"><pre class="notebook-code"><code># parameters
+learning_rate = 0.001
+training_epochs = 15
+
+# contruct model
+model = CNN().to(device)
+
+# define cost/loss &amp; optimizer
+criterion = torch.nn.CrossEntropyLoss().to(device)    # Softmax
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+# train
+total_batch = len(data_loader)
+print('Learning started. It takes sometime.')
+for epoch in range(training_epochs):
+    avg_cost = 0
+
+    for X, Y in data_loader:
+        X = X.to(device)
+        Y = Y.to(device)
+
+        optimizer.zero_grad()
+        hypothesis = model(X)
+        cost = criterion(hypothesis, Y)
+        cost.backward()
+        optimizer.step()
+
+        avg_cost += cost / total_batch
+
+    print('[Epoch: {:&gt;4}] cost = {:&gt;.9}'.format(epoch + 1, avg_cost))
+
+print('Learning Finished!')</code></pre><pre class="notebook-output">Learning started. It takes sometime.
+[Epoch:    1] cost = 0.225600749
+[Epoch:    2] cost = 0.0629422814
+[Epoch:    3] cost = 0.0462685339
+[Epoch:    4] cost = 0.0374453217
+[Epoch:    5] cost = 0.0312564597
+[Epoch:    6] cost = 0.0261451434
+[Epoch:    7] cost = 0.0218881592
+[Epoch:    8] cost = 0.0182996988
+[Epoch:    9] cost = 0.0160796437
+[Epoch:   10] cost = 0.0133214388
+[Epoch:   11] cost = 0.0101956706
+[Epoch:   12] cost = 0.00985957589
+[Epoch:   13] cost = 0.00824302062
+[Epoch:   14] cost = 0.00647699879
+[Epoch:   15] cost = 0.00701776193
+Learning Finished!
+</pre></section><section class="notebook-cell"><pre class="notebook-code"><code># Test model and check accuracy
+with torch.no_grad():
+    X_test = mnist_test.data.view(len(mnist_test), 1, 28, 28).float().to(device)
+    Y_test = mnist_test.targets.to(device)
+
+    prediction = model(X_test)
+    correct_prediction = torch.argmax(prediction, 1) == Y_test
+    accuracy = correct_prediction.float().mean()
+    print('Accuracy:', accuracy.item())</code></pre><pre class="notebook-output">Accuracy: 0.9848999977111816
+</pre></section><section class="notebook-cell"><pre class="notebook-code"><code># Random sample test
+with torch.no_grad():
+  r = random.randint(0, len(mnist_test) - 1)
+  img_sample = mnist_test.data[r].view(1, 1, 28, 28).float().to(device)
+  label_sample = mnist_test.targets[r].to(device)
+
+  print('Label: ', label_sample.item())
+  sample_prediction = model(img_sample)
+  print('Prediction: ', torch.argmax(sample_prediction, axis=1).item())
+
+  plt.imshow(mnist_test.data[r].view(28, 28), cmap='Greys', interpolation='nearest')
+  plt.show()</code></pre><pre class="notebook-output">Label:  9
+Prediction:  9
+</pre><pre class="notebook-output">&lt;Figure size 640x480 with 1 Axes&gt;</pre><img alt="실행 결과" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAaAAAAGdCAYAAABU0qcqAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjcuMSwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy/bCgiHAAAACXBIWXMAAA9hAAAPYQGoP6dpAAAacElEQVR4nO3df0zU9x3H8dehctUKZxHhYKJDa+talWVOGbFldlKVJUat2eyPP9QYjRabKetqaNradl3obNIZG6bJ4mRNqnYm/oj+4dLSgumGblqdMeuIEDY1Aq5kcogVjXz2h/HWq1j7Pe94c+fzkXwTuft++L779RuePTi++pxzTgAA9LEU6wEAAHcnAgQAMEGAAAAmCBAAwAQBAgCYIEAAABMECABgggABAEwMtB7gq3p6enTu3DmlpaXJ5/NZjwMA8Mg5p87OTuXm5iol5davc/pdgM6dO6e8vDzrMQAAd+jMmTMaOXLkLZ/vdwFKS0uTdH3w9PR042kAAF6FQiHl5eWFv57fStwCVFVVpbfeekutra0qKCjQO++8o6lTp9523Y1vu6WnpxMgAEhgt/sxSlzehPD++++rvLxc69at06effqqCggLNmjVL58+fj8fhAAAJKC4Bevvtt7Vs2TItWbJEDz30kDZv3qwhQ4bo97//fTwOBwBIQDEP0JUrV3T06FGVlJT8/yApKSopKVF9ff1N+3d3dysUCkVsAIDkF/MAff7557p27Zqys7MjHs/OzlZra+tN+1dWVioQCIQ33gEHAHcH819EraioUEdHR3g7c+aM9UgAgD4Q83fBZWZmasCAAWpra4t4vK2tTcFg8Kb9/X6//H5/rMcAAPRzMX8FlJqaqsmTJ6umpib8WE9Pj2pqalRUVBTrwwEAElRcfg+ovLxcixYt0ve//31NnTpVGzZsUFdXl5YsWRKPwwEAElBcArRw4UL95z//0SuvvKLW1lZ997vf1YEDB256YwIA4O7lc8456yG+LBQKKRAIqKOjgzshAEAC+qZfx83fBQcAuDsRIACACQIEADBBgAAAJggQAMAEAQIAmCBAAAATBAgAYIIAAQBMECAAgAkCBAAwQYAAACYIEADABAECAJggQAAAEwQIAGCCAAEATBAgAIAJAgQAMEGAAAAmCBAAwAQBAgCYIEAAABMECABgggABAEwQIACACQIEADBBgAAAJggQAMAEAQIAmCBAAAATBAgAYIIAAQBMECAAgAkCBAAwQYAAACYIEADABAECAJggQAAAEwQIAGCCAAEATBAgAIAJAgQAMEGAAAAmCBAAwAQBAgCYIEAAABMECABgggABAEwQIACACQIEADBBgAAAJggQAMAEAQIAmCBAAAATMQ/Qq6++Kp/PF7GNHz8+1ocBACS4gfH4pA8//LA+/PDD/x9kYFwOAwBIYHEpw8CBAxUMBuPxqQEASSIuPwM6deqUcnNzNWbMGD3zzDM6ffr0Lfft7u5WKBSK2AAAyS/mASosLFR1dbUOHDigTZs2qbm5WY8++qg6Ozt73b+yslKBQCC85eXlxXokAEA/5HPOuXge4MKFCxo9erTefvttLV269Kbnu7u71d3dHf44FAopLy9PHR0dSk9Pj+doAIA4CIVCCgQCt/06Hvd3BwwbNkwPPPCAGhsbe33e7/fL7/fHewwAQD8T998DunjxopqampSTkxPvQwEAEkjMA/T888+rrq5O//rXv/SXv/xF8+fP14ABA/TUU0/F+lAAgAQW82/BnT17Vk899ZTa29s1YsQIPfLIIzp06JBGjBgR60MBABJYzAO0Y8eOWH9KAEAS4l5wAAATBAgAYIIAAQBMECAAgAkCBAAwQYAAACYIEADABAECAJggQAAAEwQIAGCCAAEATBAgAICJuP+DdMCXXbt2zfOaTz75xPOalStXel4jSZ999llU6/rCkiVLPK/ZsmVLVMfy+XxRrQO84BUQAMAEAQIAmCBAAAATBAgAYIIAAQBMECAAgAkCBAAwQYAAACYIEADABAECAJggQAAAEwQIAGCCAAEATHA3bMg5F9W6gwcPel6zevVqz2v+/ve/e14TrXvvvdfzmvnz53tes337ds9rqqurPa95/PHHPa+RpJ/85Cee1wwcyJcTeMMrIACACQIEADBBgAAAJggQAMAEAQIAmCBAAAATBAgAYIIAAQBMECAAgAkCBAAwQYAAACYIEADABHcPTDLR3Fh0165dUR0rmhtWDhgwwPOaESNGeF7z7LPPel4jRXez1EAg4HnNihUrPK/Zu3ev5zXPPPOM5zWS9NZbb3leU1dX53lNWlqa5zVIHrwCAgCYIEAAABMECABgggABAEwQIACACQIEADBBgAAAJggQAMAEAQIAmCBAAAATBAgAYIIAAQBMcDPSJNPe3u55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J56I+eAAgMTm6U0IBw4ciPi4urpaWVlZOnr0qIqLi9XR0aEtW7Zo27Zt+tGPfiRJ2rp1q77zne/o0KFD+sEPfhC7yQEACe2OfgbU0dEhScrIyJAkHT16VFevXlVJSUl4n/Hjx2vUqFGqr6/v9XN0d3crFApFbACA5Bd1gHp6erR69WpNmzZNEyZMkCS1trYqNTVVw4YNi9g3Oztbra2tvX6eyspKBQKB8JaXlxftSACABBJ1gMrKynTy5Ent2LHjjgaoqKhQR0dHeDtz5swdfT4AQGKI6hdRV61apf379+vgwYMaOXJk+PFgMKgrV67owoULEa+C2traFAwGe/1cfr9ffr8/mjEAAAnM0ysg55xWrVql3bt366OPPlJ+fn7E85MnT9agQYNUU1MTfqyhoUGnT59WUVFRbCYGACQFT6+AysrKtG3bNu3du1dpaWnhn+sEAgENHjxYgUBAS5cuVXl5uTIyMpSenq7nnntORUVFvAMOABDBU4A2bdokSZo+fXrE41u3btXixYslXb/3VEpKihYsWKDu7m7NmjVLv/3tb2MyLAAgeXgKkHPutvvcc889qqqqUlVVVdRDAYiN06dP99mx7rvvPs9rUlK4G9jdjL99AIAJAgQAMEGAAAAmCBAAwAQBAgCYIEAAABMECABgggABAEwQIACACQIEADBBgAAAJggQAMAEAQIAmCBAAAATBAgAYIIAAQBMECAAgAkCBAAwQYAAACYIEADABAECAJggQAAAEwQIAGCCAAEATBAgAIAJAgQAMDHQegAA38x///tfz2va2triMAkQG7wCAgCYIEAAABMECABgggABAEwQIACACQIEADBBgAAAJggQAMAEAQIAmCBAAAATBAgAYIIAAQBMcDNSIEGcOnXK85qzZ8/GYRIgNngFBAAwQYAAACYIEADABAECAJggQAAAEwQIAGCCAAEATBAgAIAJAgQAMEGAAAAmCBAAwAQBAgCYIEAAABMECABgggABAEx4ClBlZaWmTJmitLQ0ZWVlad68eWpoaIjYZ/r06fL5fBHbihUrYjo0ACDxeQpQXV2dysrKdOjQIX3wwQe6evWqZs6cqa6uroj9li1bppaWlvC2fv36mA4NAEh8nv5F1AMHDkR8XF1draysLB09elTFxcXhx4cMGaJgMBibCQEASemOfgbU0dEhScrIyIh4/L333lNm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nJwc61HM5OfnKxgMRlwfoVBIhw8fvuuvj7Nnz6q9vT2prg/nnFatWqXdu3fro48+Un5+fsTzkydP1qBBgyKuh4aGBp0+fTqprofbnYfeHD9+XJL61/Vg/S6Ib2LHjh3O7/e76upq949//MMtX77cDRs2zLW2tlqP1qd+/vOfu9raWtfc3Oz+/Oc/u5KSEpeZmenOnz9vPVpcdXZ2umPHjrljx445Se7tt992x44dc//+97+dc869+eabbtiwYW7v3r3uxIkTbu7cuS4/P9998cUXxpPH1tedh87OTvf888+7+vp619zc7D788EP3ve99z40bN85dvnzZevSYWblypQsEAq62tta1tLSEt0uXLoX3WbFihRs1apT76KOP3JEjR1xRUZErKioynDr2bnceGhsb3euvv+6OHDnimpub3d69e92YMWNccXGx8eSREiJAzjn3zjvvuFGjRrnU1FQ3depUd+jQIeuR+tzChQtdTk6OS01Ndd/61rfcwoULXWNjo/VYcffxxx87STdtixYtcs5dfyv2yy+/7LKzs53f73czZsxwDQ0NtkPHwdedh0uXLrmZM2e6ESNGuEGDBrnRo0e7ZcuWJd3/pPX23y/Jbd26NbzPF1984Z599ll33333uSFDhrj58+e7lpYWu6Hj4Hbn4fTp0664uNhlZGQ4v9/v7r//fveLX/zCdXR02A7+FfxzDAAAE/3+Z0AAgOREgAAAJggQAMAEAQIAmCBAAAATBAgAYIIAAQBMECAAgAkCBAAwQYAAACYIEADABAECAJj4HybJYulrHkgKAAAAAElFTkSuQmCC"/></section><section class="notebook-cell">
+<p><span id="assignment"></span></p>
+<h3 id="3-assignment">3 Assignment</h3>
+<p><span id="다음-미완성-코드를-활용해-새로운-data를-학습해보자"></span></p>
+<h3 id="use-the-following-incomplete-code-to-train-on-new-data">Use the following incomplete code to train on new data</h3>
+<ul>
+<li>Training data image
+<ul>
+<li>Shape: (?, 3, 64, 128)
+<ul>
+<li>Assume multiple RGB images of size 64x128</li>
+</ul></li>
+</ul></li>
+<li>Test data image
+<ul>
+<li>Shape: (?, 3, ?, ?)
+<ul>
+<li>Assume multiple RGB images of unknown size</li>
+</ul></li>
+</ul></li>
+<li>Labels
+<ul>
+<li>There are 2 image classes</li>
+<li>Refer to the data folder structure</li>
+</ul></li>
+<li>Data folder location
+<ul>
+<li>Copy the 2 data folders from the notebook's GitHub repository to a suitable location for use</li>
+</ul></li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>import torch
+import torchvision.datasets as dsets
+import torchvision.transforms as transforms
+import torch.nn.init
+from torch.utils.data import DataLoader
+
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
+print(device)
+
+from google.colab import drive
+drive.mount('/content/drive')
+
+# for reproducibility
+torch.manual_seed(777)
+if device == 'cuda':
+    torch.cuda.manual_seed_all(777)
+
+# Model
+##### Use the model written in the previous assignment
+##### Adapt it to the changed image input
+##### Note that the new image size is 64x128, with 3 RGB channels rather than grayscale
+
+# parameters
+##### Modify as appropriate
+learning_rate =
+training_epochs =
+
+# contruct model
+model = CNN().to(device)
+
+# define cost/loss &amp; optimizer
+criterion = torch.nn.CrossEntropyLoss().to(device)
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+
+# train
+##### Learn this function's behavior; it is often used when training with your own dataset
+##### Look up the relevant function information on the official pytorch website
+trans = transforms.Compose([transforms.ToTensor()])
+train_data = dsets.ImageFolder(root='/content/drive/MyDrive/Colab Notebooks/courses/AI_Appl/train_data', transform=trans)
+data_loader = DataLoader(dataset = train_data, batch_size = 8, shuffle = True)
+
+total_batch = len(data_loader)
+
+##### Training loop
+##### You may reuse the previous source code, but try writing it yourself for practice
+
+# test
+##### Learn this function's behavior; it is often used when training with your own dataset
+##### Look up the relevant function information on the official pytorch website
+trans=transforms.Compose([transforms.Resize((64,128)),transforms.ToTensor()])
+test_data = dsets.ImageFolder(root='/content/drive/MyDrive/Colab Notebooks/courses/AI_Appl/test_data', transform=trans)
+test_set = DataLoader(dataset = test_data, batch_size = len(test_data))
+
+with torch.no_grad():
+##### Loop for testing the results
+##### You may reuse the previous source code, but try writing it yourself for practice
+</code></pre><pre class="notebook-output">cuda
+Drive already mounted at /content/drive; to attempt to forcibly remount, call drive.mount("/content/drive", force_remount=True).
+Learning started. It takes sometime.
+[Epoch:    1] cost = 0.158599436
+[Epoch:    2] cost = 0.00020430611
+[Epoch:    3] cost = 2.68744279e-05
+[Epoch:    4] cost = 5.39911434e-06
+[Epoch:    5] cost = 1.20812297e-06
+Learning Finished!
+Accuracy: 1.0
+</pre></section></main><footer class="site-footer" data-niil-frame=""><div class="footer-identity"><strong>Nature-inspired Intelligence Lab</strong><span>Kwangwoon University · Seoul, Korea</span></div><div class="footer-meta"><a href="/en/courses/reuse.html">Author &amp; use</a><small>© NiiL</small></div></footer></body></html>

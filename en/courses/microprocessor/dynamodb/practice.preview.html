@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Sensor log storage and queries | Microprocessor Applications</title><link data-course-ui="" href="/assets/courses/course-ui.css?v=8fb1789a3067" rel="stylesheet"/><script data-course-ui="" defer="" src="/assets/courses/course-ui.js?v=8fb1789a3067"></script><meta content="63392d8709149e441d1a399792ca2223cfeb4cfa4b31ffff4221526381ea55d4" name="notebook-source-sha256"/><meta content="a7a0f623e8a37da44511f08a5783192f789bacc46e5bc6313d894dd557a94974" name="notebook-renderer-sha256"/><meta content="Ki-Baek Lee (이기백)" data-niil-frame="" name="author"/><script data-niil-frame="" type="application/ld+json">{"@context": "https://schema.org", "@type": "LearningResource", "name": "Sensor log storage and queries", "url": "https://nii-lab.github.io/en/courses/microprocessor/dynamodb/practice.preview.html", "author": {"@type": "Person", "name": "Ki-Baek Lee", "alternateName": "이기백", "affiliation": {"@type": "Organization", "name": "Kwangwoon University · NiiL"}, "@id": "https://nii-lab.github.io/ko/pages/ki-baek-lee-36f11249/#person"}, "license": "https://creativecommons.org/licenses/by/4.0/", "creditText": "Teaching content: Ki-Baek Lee, CC BY 4.0. Original exercise code: MIT; see course LICENSE.md. Third-party terms retained."}</script><link href="https://nii-lab.github.io/ko/courses/microprocessor/dynamodb/practice.preview.html" hreflang="ko" rel="alternate"/><link href="https://nii-lab.github.io/en/courses/microprocessor/dynamodb/practice.preview.html" hreflang="en" rel="alternate"/><link href="https://nii-lab.github.io/ko/courses/microprocessor/dynamodb/practice.preview.html" hreflang="x-default" rel="alternate"/><link data-niil-frame="" href="/assets/niil.css?v=mlx-preview1" rel="stylesheet"/><script data-niil-frame="" defer="" src="/assets/routes.js?v=20261030-layout1"></script><script data-niil-frame="" defer="" src="/assets/niil.js?v=20261030-layout1"></script><link data-niil-frame="" href="/assets/courses.css?v=20261031-unified" rel="stylesheet"/><meta content="Microprocessor Applications: Sensor log storage and queries." name="description"/><meta content="index,follow" name="robots"/><link href="https://nii-lab.github.io/en/courses/microprocessor/dynamodb/practice.preview.html" rel="canonical"/><meta content="Sensor log storage and queries | Microprocessor Applications" property="og:title"/><meta content="Microprocessor Applications: Sensor log storage and queries." property="og:description"/><meta content="https://nii-lab.github.io/en/courses/microprocessor/dynamodb/practice.preview.html" property="og:url"/><meta content="website" property="og:type"/><meta content="NiiL · Kwangwoon University" property="og:site_name"/><meta content="en_US" property="og:locale"/><meta content="summary" name="twitter:card"/><meta content="Sensor log storage and queries | Microprocessor Applications" name="twitter:title"/><meta content="Microprocessor Applications: Sensor log storage and queries." name="twitter:description"/><script data-niil-seo="" type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "Organization", "@id": "https://nii-lab.github.io/#organization", "name": "Nature-inspired Intelligence Lab (NiiL)", "alternateName": "자연모사 인공지능 연구실", "url": "https://nii-lab.github.io/", "parentOrganization": {"@type": "CollegeOrUniversity", "name": "Kwangwoon University", "alternateName": "광운대학교"}}, {"@type": "WebPage", "@id": "https://nii-lab.github.io/en/courses/microprocessor/dynamodb/practice.preview.html#webpage", "url": "https://nii-lab.github.io/en/courses/microprocessor/dynamodb/practice.preview.html", "name": "Sensor log storage and queries | Microprocessor Applications", "description": "Microprocessor Applications: Sensor log storage and queries.", "inLanguage": "en", "isPartOf": {"@id": "https://nii-lab.github.io/#website"}}]}</script></head><body class="course-home niil-course" data-course-title-en="Microprocessor Applications"><a class="skip" data-niil-frame="" href="#main">Skip to content</a><header class="site-header" data-niil-frame=""><a aria-label="NiiL home" class="brand" href="/en/">NiiL<span class="brand-dot">●</span></a><button aria-controls="site-nav" aria-expanded="false" class="menu-toggle" type="button">Menu ☰</button><nav aria-label="Main navigation" id="site-nav"><a href="/en/research/">Research</a><a href="/en/publications/">Publications</a><a href="/en/members/">People</a><a aria-current="page" href="/en/courses/">Course</a><a href="/en/contact/">Contact</a></nav><nav aria-label="Language" class="language-switch"><a data-course-language="ko" data-language="ko" href="/ko/courses/microprocessor/dynamodb/practice.preview.html" lang="ko">한국어</a><span aria-hidden="true">/</span><a aria-current="true" data-course-language="en" data-language="en" href="/en/courses/microprocessor/dynamodb/practice.preview.html" lang="en">EN</a></nav></header><main class="directory" id="main"><nav aria-label="Current course" class="breadcrumb" data-niil-frame=""><a data-course-label-en="Microprocessor Applications" href="/en/courses/microprocessor/index.html">Microprocessor Applications</a></nav><h1>Sensor log storage and queries</h1><p class="translation-note" data-translation-note="">English translation</p><nav class="notebook-actions"><a download="practice.ipynb" href="/en/courses/microprocessor/dynamodb/practice.ipynb">Download Colab notebook</a><a href="https://colab.research.google.com/github/nii-lab/nii-lab.github.io/blob/master/en/courses/microprocessor/dynamodb/practice.ipynb#copy=true" rel="noopener noreferrer" target="_blank">Run in Colab ↗</a></nav><section class="notebook-cell"><p><span id="센서-로그-저장과-조회"></span></p>
+</section><section class="notebook-cell">
+<p><span id="학습-목표"></span></p>
+<h2 id="learning-objectives">Learning objectives</h2>
+<p>Use the device log structure to check whether storing the same key again creates a new record or changes the existing record.</p>
+</section><section class="notebook-cell">
+<p><span id="실행-조건"></span></p>
+<h2 id="execution-conditions">Execution conditions</h2>
+<p>Uses Python's sqlite3; no DB server or account is required.</p>
+</section><section class="notebook-cell">
+<p><span id="중복-측정은-한-번만-저장하기"></span></p>
+<h2 id="store-duplicate-measurements-only-once">Store duplicate measurements only once</h2>
+<p><span id="시작-조건"></span></p>
+<h3 id="starting-conditions">Starting conditions</h3>
+<p>The measurements for device m1 at <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>∈</mo><mo form="prefix" stretchy="false">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo form="postfix" stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">t\in\{0,1,1,2\}</annotation></semantics></math></span> s are 20,21,22,23. Update entries with the same device and time to the latest value.</p>
+<p><span id="진행-방법"></span></p>
+<h3 id="procedure">Procedure</h3>
+<ol type="1">
+<li>Check SQLite's composite primary key and store the four provided measurements.</li>
+<li>Check the number of stored rows and the value of <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">t=1</annotation></semantics></math></span>, and explain whether the duplicate handling rule is correct.</li>
+</ol>
+<p><span id="남길-결과"></span></p>
+<h3 id="results-to-retain">Results to retain</h3>
+<ul>
+<li>Storage results and 1 duplicate handling example.</li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>import sqlite3
+connection=sqlite3.connect(':memory:')
+connection.execute('CREATE TABLE readings(device TEXT,t REAL,value REAL,PRIMARY KEY(device,t))')
+records=[('m1',0,20.),('m1',1,21.),('m1',1,22.),('m1',2,23.)]
+connection.executemany('INSERT INTO readings VALUES(?,?,?) ON CONFLICT(device,t) DO UPDATE SET value=excluded.value',records)
+connection.commit()
+print(connection.execute('SELECT * FROM readings ORDER BY t').fetchall())
+</code></pre></section><section class="notebook-cell">
+<p><span id="결과-기록자가-점검"></span></p>
+<h2 id="record-results-and-self-check">Record results and self-check</h2>
+<p><strong>Input count:</strong></p>
+<p><strong>Stored row count:</strong></p>
+<p><strong>Duplicate key:</strong></p>
+<p><strong>Final value:</strong></p>
+<p><span id="확인할-점"></span></p>
+<h3 id="points-to-check">Points to check</h3>
+<ul>
+<li>Did you distinguish measurement time from reception time?</li>
+<li>Did you use parameters instead of appending values directly to SQL strings?</li>
+</ul>
+</section><section class="notebook-cell">
+<p><span id="시간-구간과-장치로-조회하기"></span></p>
+<h2 id="query-by-time-interval-and-device">Query by time interval and device</h2>
+<p><span id="시작-조건-1"></span></p>
+<h3 id="starting-conditions-1">Starting conditions</h3>
+<p>Add <span class="math inline"><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>∈</mo><mo form="prefix" stretchy="false">{</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo form="postfix" stretchy="false">}</mo></mrow><annotation encoding="application/x-tex">t\in\{0,1,2\}</annotation></semantics></math></span> with values 30,31,32 for device m2. Query only m1 for 1≤t≤2.</p>
+<p><span id="진행-방법-1"></span></p>
+<h3 id="procedure-1">Procedure</h3>
+<ol type="1">
+<li>Write a query function that takes a device, start time, and end time as arguments.</li>
+<li>Test the specified interval and an interval with no values once each.</li>
+<li>Plot query results as time versus measurement.</li>
+</ol>
+<p><span id="남길-결과-1"></span></p>
+<h3 id="results-to-retain-1">Results to retain</h3>
+<ul>
+<li>A query function, two query results, and a time series plot.</li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>connection.executemany('INSERT INTO readings VALUES(?,?,?)',[('m2',0,30.),('m2',1,31.),('m2',2,32.)])
+def query(device,start,end):
+    return connection.execute('SELECT t,value FROM readings WHERE device=? AND t BETWEEN ? AND ? ORDER BY t',(device,start,end)).fetchall()
+print(query('m1',1,2));print(query('m1',10,20))
+# TODO: Plot the time series.
+</code></pre></section><section class="notebook-cell">
+<p><span id="결과-기록자가-점검-1"></span></p>
+<h2 id="record-results-and-self-check-1">Record results and self-check</h2>
+<p><strong>Device:</strong></p>
+<p><strong>Query interval:</strong></p>
+<p><strong>Row count:</strong></p>
+<p><strong>Value range:</strong></p>
+<p><span id="확인할-점-1"></span></p>
+<h3 id="points-to-check-1">Points to check</h3>
+<ul>
+<li>Did you specify the sort order in SQL?</li>
+<li>Did you avoid replacing empty results with errors or a value of 0?</li>
+</ul>
+</section><section class="notebook-cell">
+<p><span id="센서에서-api까지-연결하기"></span></p>
+<h2 id="connect-sensors-to-an-api">Connect sensors to an API</h2>
+<p><span id="시작-조건-2"></span></p>
+<h3 id="starting-conditions-2">Starting conditions</h3>
+<p>Assume the HTTP API in the next unit calls the query function. The request is device=m1,start=0,end=2.</p>
+<p><span id="진행-방법-2"></span></p>
+<h3 id="procedure-2">Procedure</h3>
+<ol type="1">
+<li>Define the field structure for passing query results as JSON.</li>
+<li>Define response rules that distinguish a nonexistent device from start&gt;end.</li>
+<li>Identify the data and query rules to retain when switching to an external storage system such as DynamoDB.</li>
+</ol>
+<p><span id="남길-결과-2"></span></p>
+<h3 id="results-to-retain-2">Results to retain</h3>
+<ul>
+<li>Two response examples for valid and invalid requests, and rules to retain when replacing storage.</li>
+</ul>
+</section><section class="notebook-cell"><pre class="notebook-code"><code>import json
+print(json.dumps({'device':'m1','readings':[{'time_s':t,'value':v} for t,v in query('m1',0,2)]}))
+# TODO: Implement input validation and error responses.
+</code></pre></section><section class="notebook-cell">
+<p><span id="결과-기록자가-점검-2"></span></p>
+<h2 id="record-results-and-self-check-2">Record results and self-check</h2>
+<p><strong>Request:</strong></p>
+<p><strong>Validation results:</strong></p>
+<p><strong>Response fields:</strong></p>
+<p><strong>Expected row count:</strong></p>
+<p><span id="확인할-점-2"></span></p>
+<h3 id="points-to-check-2">Points to check</h3>
+<ul>
+<li>Did you verify storage and query principles without an external service account?</li>
+<li>Did you preserve the meanings of device ID and measurement time in the API?</li>
+</ul>
+</section><section class="notebook-cell">
+<p><span id="공식-예제데이터"></span></p>
+<h2 id="official-examples-and-data">Official examples and data</h2>
+<ul>
+<li><a href="https://docs.python.org/3/library/sqlite3.html" rel="noopener noreferrer" target="_blank">Python · SQLite</a></li>
+</ul>
+</section></main><footer class="site-footer" data-niil-frame=""><div class="footer-identity"><strong>Nature-inspired Intelligence Lab</strong><span>Kwangwoon University · Seoul, Korea</span></div><div class="footer-meta"><a href="/en/courses/reuse.html">Author &amp; use</a><small>© NiiL</small></div></footer></body></html>
