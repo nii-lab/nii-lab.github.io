@@ -110,6 +110,5 @@ if (researchReturn) {
  document.addEventListener('keydown',e=>{if(e.key==='Escape')stop()});
  reduced.addEventListener('change',()=>{if(reduced.matches)stop()});
  image.addEventListener('error',()=>{if(image.src!==still)stop()});
- let visited=false;try{visited=sessionStorage.getItem('niil-recruit-intro')==='1';sessionStorage.setItem('niil-recruit-intro','1')}catch(_){}
- if(!visited)play();
+
 })();

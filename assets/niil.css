@@ -77,12 +77,12 @@ html[lang="ko"] h1,html[lang="ko"] h2,html[lang="ko"] h3{word-break:keep-all;ove
 @media(max-width:700px){.member-detail{gap:32px;padding-bottom:60px}}
 
 /* A shared baseline for the footer identity and its small utility link. */
-footer.site-footer{display:flex;align-items:center;justify-content:space-between;gap:32px;padding:36px max(24px,calc((100vw - 1144px)/2));font-size:13px}
+footer.site-footer{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;padding:36px max(24px,calc((100vw - 1144px)/2));font-size:13px}
 .site-footer .footer-identity{display:flex;flex-direction:column;gap:3px;line-height:1.7}.site-footer .footer-identity strong{font-size:14px;font-weight:600}.site-footer .footer-identity span{color:var(--muted)}
-.site-footer .footer-meta{display:flex;align-items:center;gap:24px;line-height:1.7}.site-footer .footer-meta a{text-decoration:underline;text-underline-offset:4px}.site-footer small{border:0;padding:0;margin:0;color:var(--muted);font-size:12px}
+.site-footer .footer-meta{display:flex;align-items:flex-end;gap:24px;line-height:1.7}.site-footer .footer-stamp{display:flex;flex-direction:column;align-items:flex-end;gap:8px}.site-footer .footer-stamp img{display:block;width:32px;height:32px;flex:none}.site-footer .footer-meta a{text-decoration:underline;text-underline-offset:4px}.site-footer small{border:0;padding:0;margin:0;color:var(--muted);font-size:12px}
 .official-titles{margin:16px 0 28px}.official-titles summary{cursor:pointer;font-size:14px;color:var(--muted)}.official-titles li{font-size:14px}.research-links{margin-top:32px!important;font-size:13px!important;color:var(--muted)}
 .reuse-guide{padding-bottom:80px}.reuse-guide blockquote{margin:24px 0;padding:18px 22px;border-left:3px solid var(--color-primary);background:var(--color-surface-slate)}.reuse-guide details{margin-top:32px}.reuse-guide summary{cursor:pointer;font-size:15px}.course-author{font-size:14px!important;color:var(--muted);margin:12px 0 24px!important}
-@media(max-width:700px){footer.site-footer{align-items:flex-start;flex-direction:column;gap:18px;padding:30px 24px}.site-footer .footer-meta{gap:20px}}
+@media(max-width:700px){footer.site-footer{align-items:flex-end;flex-direction:row;gap:16px;padding:30px 24px}.site-footer .footer-identity{min-width:0}.site-footer .footer-meta{flex:none;flex-direction:column;align-items:flex-end;gap:8px}}
 
 /* Course catalog */
 .course-catalog{--course-ink:var(--ink);--course-muted:var(--muted);--course-line:var(--line)}
@@ -104,7 +104,7 @@ footer.site-footer{display:flex;align-items:center;justify-content:space-between
 .home-heading{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(350px,1fr);gap:40px;align-items:end;padding-bottom:38px}
 .home-intro{min-width:0}.home-heading h1{font-size:clamp(2.3rem,4.2vw,3.6rem)}
 .home-intro>.lede{margin-bottom:0}
-.recruit-card{justify-self:end;width:fit-content;max-width:100%;min-width:0;border:1px solid var(--color-border);border-radius:10px;padding:22px 24px;background:var(--paper)}
+.recruit-card{justify-self:end;width:fit-content;max-width:100%;min-width:0;padding:0}
 .recruit-link{display:flex;align-items:flex-end;gap:12px;color:var(--ink);text-decoration:none;width:fit-content;max-width:100%}
 .recruit-link .button{pointer-events:none;white-space:nowrap;font-size:14px;line-height:20px;min-height:28px;padding:4px 14px;box-sizing:border-box}
 .recruit-art{position:relative;display:block;width:70px;height:70px;flex:none}
@@ -114,9 +114,9 @@ footer.site-footer{display:flex;align-items:center;justify-content:space-between
 .recruit-link:hover .button{background:var(--color-primary-hover);border-color:var(--color-primary-hover);color:var(--color-on-primary)}
 .recruit-link:hover .recruit-art-frame::after{border-color:var(--color-primary);box-shadow:0 0 4px #83c8bf70}
 .recruit-link:focus-visible{outline:2px solid var(--color-focus);outline-offset:5px}
-@media(max-width:1050px){.home-heading{grid-template-columns:1fr;gap:24px}.recruit-card{justify-self:start}}
-@media(max-width:600px){.recruit-card{padding:20px}.home-heading h1{font-size:2.2rem}.recruit-link .button{font-size:13px}}
-@media(max-width:360px){.recruit-card{padding:16px}.recruit-link{gap:10px}.recruit-link .button{padding-inline:14px;font-size:12px}}
+@media(max-width:1050px){.home-heading{grid-template-columns:1fr;gap:24px}.recruit-card{justify-self:end}}
+@media(max-width:600px){.home-heading h1{font-size:2.2rem}.recruit-link .button{font-size:13px}}
+@media(max-width:360px){.recruit-link{gap:10px}.recruit-link .button{padding-inline:14px;font-size:12px}}
 @media(prefers-reduced-motion:reduce){.recruit-art-frame::after{transition:none}}
 
 .contact-wide{max-width:1440px;width:100%}
