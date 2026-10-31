@@ -19,6 +19,7 @@
   const embedded = new URLSearchParams(location.search).get('embedded') === '1';
   if (embedded) {
     document.documentElement.classList.add('course-embedded');
+    parent.postMessage({type:'course-ready'}, location.origin === 'null' ? '*' : location.origin);
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') parent.postMessage({type:'course-close'}, location.origin === 'null' ? '*' : location.origin);
     });
@@ -32,12 +33,18 @@
   }
   const english = document.documentElement.lang.toLowerCase().startsWith('en');
   const text = (ko, en) => english ? en : ko;
-  let dialog, frame, trigger;
+  let dialog, frame, trigger, loadingTimer;
+  function markReady() {
+    if (!dialog?.open || !frame) return;
+    clearTimeout(loadingTimer); dialog.dataset.previewState = 'ready';
+    dialog.querySelector('.overlay-status').hidden = true;
+    dialog.querySelector('.overlay-content').removeAttribute('aria-busy');
+  }
   function prepare() {
     dialog = document.createElement('dialog');
     dialog.className = 'course-overlay';
     dialog.setAttribute('aria-labelledby','course-overlay-title');
-    dialog.innerHTML = '<header class="overlay-bar"><strong id="course-overlay-title">학습자료</strong><a class="overlay-run" target="_blank" rel="noopener noreferrer" hidden>Colab 실행 ↗</a><button type="button" class="overlay-close" aria-label="자료 닫기">닫기 ×</button></header><div class="overlay-content"></div>';
+    dialog.innerHTML = '<header class="overlay-bar"><strong id="course-overlay-title">학습자료</strong><a class="overlay-run" target="_blank" rel="noopener noreferrer" hidden>Colab 실행 ↗</a><button type="button" class="overlay-close" aria-label="자료 닫기">닫기 ×</button></header><p class="overlay-status" role="status" hidden></p><div class="overlay-content"></div>';
     dialog.querySelector('#course-overlay-title').textContent = text('학습자료', 'Study material');
     const close = dialog.querySelector('.overlay-close');
     close.textContent = text('닫기 ×', 'Close ×');
@@ -51,12 +58,15 @@
     dialog.addEventListener('close', () => {
       document.documentElement.classList.remove('course-dialog-open');
       dialog.querySelector('.overlay-content').replaceChildren();
+      clearTimeout(loadingTimer);
+      dialog.querySelector('.overlay-status').hidden = true;
       frame = null;
       trigger?.focus();
     });
     window.addEventListener('message', e => {
       if (!frame || e.source !== frame.contentWindow || e.origin !== location.origin) return;
       if (e.data?.type === 'course-close') dialog.close();
+      if (e.data?.type === 'course-ready') markReady();
 
     });
   }
@@ -77,6 +87,33 @@
     url.searchParams.set('embedded','1');
     if (a.dataset.documentVersion) url.searchParams.set('v',a.dataset.documentVersion);
     frame = document.createElement('iframe');
+    const activeFrame = frame;
+    const status = dialog.querySelector('.overlay-status');
+    const content = dialog.querySelector('.overlay-content');
+    status.hidden = false; status.textContent = text('자료를 불러오는 중…', 'Loading material…');
+    content.setAttribute('aria-busy','true'); dialog.dataset.previewState = 'loading';
+    const recover = (kind = 'error') => {
+      if (frame !== activeFrame || !dialog.open) return;
+      clearTimeout(loadingTimer); content.removeAttribute('aria-busy');
+      status.hidden = false;
+      dialog.dataset.previewState = kind === 'slow' ? 'delayed' : 'error';
+      status.textContent = kind === 'slow' ? text('자료를 불러오는 데 시간이 걸리고 있습니다.', 'The material is taking longer to load.') : text('미리보기를 불러오지 못했습니다.', 'The preview could not be loaded.');
+      const fallback = document.createElement('a');
+      fallback.className = 'overlay-recovery'; fallback.href = a.href;
+      fallback.target = '_blank'; fallback.rel = 'noopener noreferrer';
+      fallback.textContent = text('새 탭에서 열기 ↗', 'Open in a new tab ↗'); status.append(fallback);
+    };
+    frame.addEventListener('load', () => {
+      if (frame !== activeFrame) return;
+      try {
+        const page = frame.contentDocument;
+        if (!page) return; // Opaque file origins may render successfully; await child readiness.
+        if (!page.querySelector('main') || /^404\b/.test(page.title)) { recover(); return; }
+        markReady();
+      } catch (_) { /* Verification is unavailable, not proof of a load failure. */ }
+    });
+    frame.addEventListener('error',() => recover('error'));
+    loadingTimer = setTimeout(() => recover('slow'),10000);
     frame.src = url.href;
     frame.title = a.dataset.courseOverlay || text('학습자료', 'Study material');
     dialog.querySelector('.overlay-content').replaceChildren(frame);

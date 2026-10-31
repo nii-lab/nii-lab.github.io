@@ -27,6 +27,14 @@ function bindFilters(config) {
     if (value !== null && (control.tagName !== 'SELECT' || [...control.options].some(o => o.value === value))) control.value = value;
   });
   const items = [...document.querySelectorAll(config.items)];
+  const reset = document.createElement('button');
+  reset.type = 'button'; reset.className = 'filter-reset'; reset.hidden = true;
+  reset.textContent = korean ? '검색 조건 지우기' : 'Clear filters';
+  search.closest('.filterbar').append(reset);
+  reset.addEventListener('click', () => {
+    controls.forEach(([control]) => { control.value = ''; });
+    apply(true); search.focus();
+  });
   const apply = (persist = false) => {
     const term = search.value.trim().toLocaleLowerCase();
     let count = 0;
@@ -45,6 +53,8 @@ function bindFilters(config) {
       const query = params.toString();
       history.replaceState(null, '', location.pathname + (query ? '?' + query : '') + location.hash);
     }
+    reset.hidden = !controls.some(([control]) => control.value);
+    refreshResearchLinks();
     refreshLanguageLinks();
   };
   controls.forEach(([control]) => control.addEventListener(control === search ? 'input' : 'change', () => apply(true)));
@@ -64,3 +74,18 @@ if (toc) document.querySelectorAll('.prose h2, .prose h3').forEach((heading, ind
   anchor.textContent = heading.textContent;
   toc.append(anchor);
 });
+
+// Retain catalog context in the detail URL; no session storage or hidden state.
+function refreshResearchLinks() {
+  document.querySelectorAll('.project-row h2 a').forEach(link => {
+    const target = new URL(link.href);
+    ['q','topic','status'].forEach(key => params.has(key) ? target.searchParams.set(key,params.get(key)) : target.searchParams.delete(key));
+    link.href = target.pathname + target.search + target.hash;
+  });
+}
+const researchReturn = document.querySelector('[data-research-return]');
+if (researchReturn) {
+  const target = new URL(researchReturn.href);
+  ['q','topic','status'].forEach(key => params.has(key) && target.searchParams.set(key,params.get(key)));
+  researchReturn.href = target.pathname + target.search + '#project-catalog';
+}
