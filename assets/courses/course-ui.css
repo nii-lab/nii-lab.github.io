@@ -91,5 +91,15 @@ main pre code{background:transparent;border:0;padding:0;font-family:inherit;font
 
 html:not([data-selected-runtime]) .lab-language{display:none}
 
+
+/* Resource labels wrap at meaningful words; preserve code, URL and body rules. */
+.chapter-actions a,.resource-links a,.notebook-actions a,.exercise-action{white-space:normal;word-break:keep-all;overflow-wrap:break-word;max-width:100%;min-width:0}
+/* Header semantics must not add browser-default visual emphasis. */
+.mlx-document table th{font-weight:inherit;text-align:inherit}
+.mlx-document table.mlx-record-table th{width:50%;overflow-wrap:anywhere}
+
+.mlx-document table.mlx-recording-table{border-collapse:collapse;width:100%;margin:1rem 0}
+.mlx-recording-table th,.mlx-recording-table td{border:1px solid var(--course-line);padding:.5rem .65rem;min-width:7.5rem;vertical-align:top}
+
 /* Semester review layout */
 .semester-plan{list-style:none;padding:0}.schedule-week{display:grid;grid-template-columns:3.2rem minmax(0,1fr);gap:1rem;padding:1.3rem 0;border-bottom:1px solid #dce2e8}.schedule-week h2{font-size:1.12rem;margin:0 0 .45rem}.schedule-week p{margin:.25rem 0;color:#546171}.schedule-number{font-size:.9rem;color:#546171;padding-top:.15rem}.schedule-exam{background:#f2f5f8;padding-left:.6rem;padding-right:.6rem;border-radius:.5rem}.schedule-week h2 a{text-decoration:none}.schedule-week h2 a:hover{text-decoration:underline}.schedule-week .chapter-arrow{margin-left:.5em;font-size:.85em;color:#65756a}.schedule-support{margin:.6rem 0 0;font-size:.85rem}.schedule-support summary{cursor:pointer;color:#546171}.schedule-support .schedule-resources{margin-top:.25rem}.schedule-followup{margin-top:.7rem}.schedule-resource-label{font-size:.75rem;color:#65756a}.schedule-followup .schedule-resources{margin-top:.15rem}.schedule-resources{font-size:.85rem;margin-top:.6rem;line-height:1.8}.schedule-overview{overflow-x:auto}.schedule-overview table{width:100%;border-collapse:collapse}.schedule-overview th,.schedule-overview td{padding:.9rem;text-align:left;vertical-align:top;border-bottom:1px solid #dce2e8}.schedule-overview td{min-width:15rem}.schedule-overview th{min-width:8rem}@media(max-width:480px){.schedule-week{grid-template-columns:2.4rem minmax(0,1fr);gap:.6rem}.schedule-resources a{overflow-wrap:anywhere}}
