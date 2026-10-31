@@ -89,3 +89,25 @@ if (researchReturn) {
   ['q','topic','status'].forEach(key => params.has(key) && target.searchParams.set(key,params.get(key)));
   researchReturn.href = target.pathname + target.search + '#project-catalog';
 }
+
+// The decorative hero stays static if scripting, motion permission or loading fails.
+const motionImage = document.querySelector('[data-brand-motion-image]');
+const motionToggle = document.querySelector('[data-brand-motion-toggle]');
+if (motionImage && motionToggle) {
+  const still = motionImage.getAttribute('src');
+  const moving = motionImage.dataset.motionSrc;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  let paused = false;
+  let failed = false;
+  const updateMotion = () => {
+    const running = !paused && !reduced.matches && !failed;
+    motionImage.src = running ? moving : still;
+    motionToggle.hidden = reduced.matches || failed;
+    motionToggle.toggleAttribute('data-paused', !running);
+    motionToggle.setAttribute('aria-label', running ? (korean ? '로고 애니메이션 일시정지' : 'Pause logo animation') : (korean ? '로고 애니메이션 재생' : 'Play logo animation'));
+  };
+  motionToggle.addEventListener('click', () => { paused = !paused; updateMotion(); });
+  reduced.addEventListener('change', updateMotion);
+  motionImage.addEventListener('error', () => { if (!failed) { failed = true; updateMotion(); } });
+  updateMotion();
+}
