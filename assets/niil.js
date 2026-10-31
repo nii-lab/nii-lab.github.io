@@ -100,7 +100,7 @@ if (researchReturn) {
  const play=async()=>{
   if(active||reduced.matches)return;
   active=true;const token=++generation;link.dataset.state='loading';
-  try{loading ||=fetch(image.dataset.motionSrc).then(r=>{if(!r.ok)throw Error('image');return r.blob()});
+  try{loading ||=fetch(image.dataset.motionSrc,{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('image');return r.blob()});
    const blob=await loading;if(token!==generation||reduced.matches)return;url=URL.createObjectURL(blob);
    image.onload=()=>{if(token!==generation)return;link.dataset.state='playing';timer=setTimeout(stop,2860);};image.src=url;
   }catch(_){loading=null;stop()}
