@@ -100,13 +100,42 @@ footer.site-footer{display:flex;align-items:center;justify-content:space-between
 /* Brand: crisp small marks and a detailed home illustration. */
 .site-header .brand{display:inline-flex;align-items:center;gap:10px;letter-spacing:-.06em}
 .brand img{width:32px;height:32px;flex:none;border-radius:8px}
-.home-heading{display:grid;grid-template-columns:minmax(0,1fr) 204px;align-items:center;gap:56px;padding-bottom:38px}
+
+.home-heading{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(350px,1fr);gap:40px;align-items:end;padding-bottom:38px}
 .home-intro{min-width:0}.home-heading h1{font-size:clamp(2.3rem,4.2vw,3.6rem)}
-.home-brand{width:100%;height:auto;display:block;position:relative;appearance:none;border:0;padding:0;background:none;color:inherit;line-height:0;cursor:pointer}.home-brand picture,.home-brand img{display:block;width:100%;height:auto}.home-brand:focus-visible{outline:2px solid var(--color-focus);outline-offset:6px}.home-brand:disabled{cursor:default;opacity:1}
-.inquiry-brand{float:right;margin:0 0 18px 24px;border-radius:16px}
-.inquiry-entry:after{content:"";display:table;clear:both}
-@media(max-width:900px){.home-heading{grid-template-columns:minmax(0,1fr) 153px;gap:28px}}
-@media(max-width:600px){.home-heading{grid-template-columns:1fr;gap:24px}.home-brand{width:95.2px;grid-row:1}.home-heading h1{font-size:2.2rem}.inquiry-brand{width:48px;height:48px;margin-left:16px}.site-header .brand{gap:8px}}
+.home-intro>.lede{margin-bottom:0}
+.recruit-card{justify-self:end;width:fit-content;max-width:100%;min-width:0;border:1px solid var(--color-border);border-radius:10px;padding:22px 24px;background:var(--paper)}
+.recruit-link{display:flex;align-items:flex-end;gap:12px;color:var(--ink);text-decoration:none;width:fit-content;max-width:100%}
+.recruit-link .button{pointer-events:none;white-space:nowrap;font-size:14px;line-height:20px;min-height:28px;padding:4px 14px;box-sizing:border-box}
+.recruit-art{position:relative;display:block;width:70px;height:70px;flex:none}
+.recruit-art-frame{position:absolute;inset:-15.625%;display:block}
+.recruit-art img{display:block;width:100%;height:100%;max-width:none}
+.recruit-art-frame::after{content:"";position:absolute;inset:11.9047619%;border:.8px solid var(--color-ink);border-radius:18.75%;pointer-events:none;box-sizing:border-box;transition:border-color .18s ease,box-shadow .18s ease}
+.recruit-link:hover .button{background:var(--color-primary-hover);border-color:var(--color-primary-hover);color:var(--color-on-primary)}
+.recruit-link:hover .recruit-art-frame::after{border-color:var(--color-primary);box-shadow:0 0 4px #83c8bf70}
+.recruit-link:focus-visible{outline:2px solid var(--color-focus);outline-offset:5px}
+@media(max-width:1050px){.home-heading{grid-template-columns:1fr;gap:24px}.recruit-card{justify-self:start}}
+@media(max-width:600px){.recruit-card{padding:20px}.home-heading h1{font-size:2.2rem}.recruit-link .button{font-size:13px}}
+@media(max-width:360px){.recruit-card{padding:16px}.recruit-link{gap:10px}.recruit-link .button{padding-inline:14px;font-size:12px}}
+@media(prefers-reduced-motion:reduce){.recruit-art-frame::after{transition:none}}
+
+.contact-wide{max-width:1440px;width:100%}
+.contact-layout{display:grid;grid-template-columns:minmax(280px,.75fr) minmax(0,1.4fr);gap:48px;align-items:start;padding-bottom:80px}
+.contact-inquiry{position:sticky;top:32px;min-width:0}
+.contact-layout .inquiry-entry{max-width:none;padding:28px;background:var(--color-surface)}
+.contact-layout .inquiry-entry h2{font-size:24px;line-height:1.4}
+.contact-layout .inquiry-entry .button{max-width:100%;line-height:1.5;gap:12px}
+.contact-layout .contact-fallback{margin:24px 0 0;font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+.contact-layout .contact-fallback p{margin-bottom:12px}
+.contact-layout .join-guidance{max-width:none;margin:0;padding:0;border:0;min-width:0}
+.contact-layout .join-guidance>h2{font-size:28px;margin:0 0 24px}
+.contact-layout .join-guidance h3{margin-top:28px}
+.contact-layout .join-guidance p{max-width:70ch}
+@media(min-width:1100px){.contact-layout .join-guidance ul{display:grid;grid-template-columns:1fr 1fr;gap:8px 28px}}
+@media(max-width:960px){.contact-layout{grid-template-columns:1fr;gap:40px}.contact-inquiry{position:static}.contact-layout .inquiry-entry{max-width:none}}
+@media(max-width:600px){.contact-layout{padding-bottom:48px}.contact-layout .inquiry-entry{padding:24px}.contact-layout .join-guidance>h2{font-size:26px}}
+
+
 
 /* Semantic interaction colors, shared across locales. */
 .prose a:not(.button),.research-links a{color:var(--color-primary)}

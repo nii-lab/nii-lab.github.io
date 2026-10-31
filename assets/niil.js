@@ -90,29 +90,26 @@ if (researchReturn) {
   researchReturn.href = target.pathname + target.search + '#project-catalog';
 }
 
-// The image itself is the control; no separate playback UI or no-JS autoplay.
-const heroPicture = document.querySelector('[data-brand-motion]');
-const heroToggle = document.querySelector('[data-hero-toggle]');
-if (heroPicture && heroToggle) {
-  const image = heroPicture.querySelector('img');
-  const webpSource = heroPicture.querySelector('source[type="image/webp"]');
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-  let paused = false;
-  let failed = false;
-  const updateHero = () => {
-    const running = !paused && !reduced.matches && !failed;
-    webpSource.media = running ? 'all' : 'not all';
-    image.src = running ? image.dataset.motionSrc : image.dataset.staticSrc;
-    heroToggle.disabled = reduced.matches || failed;
-    const label = heroToggle.disabled ? (korean ? 'NiiL 로고' : 'NiiL logo') : running ? (korean ? '로고 애니메이션 멈추기' : 'Stop logo animation') : (korean ? '로고 애니메이션 재생' : 'Play logo animation');
-    heroToggle.setAttribute('aria-label', label);
-    heroToggle.title = heroToggle.disabled ? '' : label;
-  };
-  heroToggle.addEventListener('click', () => { paused = !paused; updateHero(); });
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape' && !heroToggle.disabled) { paused = true; updateHero(); }
-  });
-  reduced.addEventListener('change', updateHero);
-  image.addEventListener('error', () => { failed = true; updateHero(); }, {once: true});
-  updateHero();
-}
+// One shared navigation target; motion never intercepts its click.
+(() => {
+ const link = document.querySelector('[data-recruit-link]');
+ if(!link) return;
+ const image=link.querySelector('img'), still=image.src, reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ let active=false,timer=null,url=null,generation=0,loading=null;
+ const stop=()=>{generation++;clearTimeout(timer);image.onload=null;image.src=still;if(url)URL.revokeObjectURL(url);url=null;active=false;link.dataset.state='idle';};
+ const play=async()=>{
+  if(active||reduced.matches)return;
+  active=true;const token=++generation;link.dataset.state='loading';
+  try{loading ||=fetch(image.dataset.motionSrc).then(r=>{if(!r.ok)throw Error('image');return r.blob()});
+   const blob=await loading;if(token!==generation||reduced.matches)return;url=URL.createObjectURL(blob);
+   image.onload=()=>{if(token!==generation)return;link.dataset.state='playing';timer=setTimeout(stop,2860);};image.src=url;
+  }catch(_){loading=null;stop()}
+ };
+ link.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse')play()});
+ link.addEventListener('focus',()=>{if(link.matches(':focus-visible'))play()});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')stop()});
+ reduced.addEventListener('change',()=>{if(reduced.matches)stop()});
+ image.addEventListener('error',()=>{if(image.src!==still)stop()});
+ let visited=false;try{visited=sessionStorage.getItem('niil-recruit-intro')==='1';sessionStorage.setItem('niil-recruit-intro','1')}catch(_){}
+ if(!visited)play();
+})();
