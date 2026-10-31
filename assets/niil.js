@@ -90,24 +90,29 @@ if (researchReturn) {
   researchReturn.href = target.pathname + target.search + '#project-catalog';
 }
 
-// The decorative hero stays static if scripting, motion permission or loading fails.
-const motionImage = document.querySelector('[data-brand-motion-image]');
-const motionToggle = document.querySelector('[data-brand-motion-toggle]');
-if (motionImage && motionToggle) {
-  const still = motionImage.getAttribute('src');
-  const moving = motionImage.dataset.motionSrc;
+// The image itself is the control; no separate playback UI or no-JS autoplay.
+const heroPicture = document.querySelector('[data-brand-motion]');
+const heroToggle = document.querySelector('[data-hero-toggle]');
+if (heroPicture && heroToggle) {
+  const image = heroPicture.querySelector('img');
+  const webpSource = heroPicture.querySelector('source[type="image/webp"]');
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   let paused = false;
   let failed = false;
-  const updateMotion = () => {
+  const updateHero = () => {
     const running = !paused && !reduced.matches && !failed;
-    motionImage.src = running ? moving : still;
-    motionToggle.hidden = reduced.matches || failed;
-    motionToggle.toggleAttribute('data-paused', !running);
-    motionToggle.setAttribute('aria-label', running ? (korean ? '로고 애니메이션 일시정지' : 'Pause logo animation') : (korean ? '로고 애니메이션 재생' : 'Play logo animation'));
+    webpSource.media = running ? 'all' : 'not all';
+    image.src = running ? image.dataset.motionSrc : image.dataset.staticSrc;
+    heroToggle.disabled = reduced.matches || failed;
+    const label = heroToggle.disabled ? (korean ? 'NiiL 로고' : 'NiiL logo') : running ? (korean ? '로고 애니메이션 멈추기' : 'Stop logo animation') : (korean ? '로고 애니메이션 재생' : 'Play logo animation');
+    heroToggle.setAttribute('aria-label', label);
+    heroToggle.title = heroToggle.disabled ? '' : label;
   };
-  motionToggle.addEventListener('click', () => { paused = !paused; updateMotion(); });
-  reduced.addEventListener('change', updateMotion);
-  motionImage.addEventListener('error', () => { if (!failed) { failed = true; updateMotion(); } });
-  updateMotion();
+  heroToggle.addEventListener('click', () => { paused = !paused; updateHero(); });
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && !heroToggle.disabled) { paused = true; updateHero(); }
+  });
+  reduced.addEventListener('change', updateHero);
+  image.addEventListener('error', () => { failed = true; updateHero(); }, {once: true});
+  updateHero();
 }
